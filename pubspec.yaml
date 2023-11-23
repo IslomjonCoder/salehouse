@@ -35,6 +35,10 @@ dependencies:
   awesome_extensions: ^2.0.10
   easy_localization: ^3.0.3
   flex_color_scheme: ^7.3.1
+  dio: ^5.3.3
+  quickalert: ^1.0.2
+  equatable: ^2.0.5
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
