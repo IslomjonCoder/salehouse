@@ -1,7 +1,14 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:crm/business_logic/blocs/companies_bloc/companies_bloc.dart';
+import 'package:crm/utils/constants/colors.dart';
+import 'package:crm/utils/constants/enums.dart';
+import 'package:crm/utils/constants/sizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:translit/translit.dart';
 
 class CompaniesScreen extends StatefulWidget {
   const CompaniesScreen({super.key});
@@ -16,85 +23,98 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        scrolledUnderElevation: 0,
         leading: IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            icon: const Icon(Icons.menu)),
+            onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu)),
         title: const Text("Kompaniyalar Ro'yxati"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+      body: BlocBuilder<CompaniesBloc, CompaniesState>(
+        builder: (context, state) {
+          if (state.status.isLoading) {
+            return LoadingAnimationWidget.bouncingBall(
+                color: TColors.tPrimaryColor, size: TSizes.lg);
+          }
+          else if (state.status.isFailure) {
+            return Center(
+              child: Text(state.error.toString()),
+            );
+          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: TSizes.base),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(TSizes.md),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "10 ",
-                            style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Kompaniyalar soni",
-                            style: context.textTheme.titleMedium?.copyWith(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      IconButton.filled(onPressed: (){}, icon: const Icon(CupertinoIcons.briefcase_fill))
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const Gap(10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) => Column(
-                  children: [
-                    const Gap(10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        elevation: 5,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "ООО CTS UNITED DEVELOPMENT ",
-                                style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                                state.companies.length.toString(),
+                                style: context.textTheme.titleMedium
+                                    ?.copyWith(fontWeight: FontWeight.w700),
                               ),
                               Text(
-                                "Djurayev Farhod Ruzikulovich",
-                                style: context.textTheme.titleMedium,
+                                "Kompaniyalar soni",
+                                style: context.textTheme.titleMedium?.copyWith(color: Colors.grey),
                               ),
-                              Text("Файзли, дом 3", style: context.textTheme.titleSmall),
                             ],
                           ),
-                        ),
+                          IconButton.filled(
+                              onPressed: () {}, icon: const Icon(CupertinoIcons.briefcase_fill))
+                        ],
                       ),
                     ),
-                    const Gap(10),
-                  ],
+                  ),
                 ),
-              ),
+                const Gap(TSizes.base),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: state.companies.length,
+                    itemBuilder: (context, index) {
+                      final company = state.companies[index];
+                      return Column(
+                      children: [
+                        // const Gap(TSizes.base),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            elevation: 5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(TSizes.md),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    company.name ,
+                                    style: context.textTheme.titleMedium
+                                        ?.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    company.director,
+                                    style: context.textTheme.titleMedium,
+                                  ),
+                                  Text( Translit().toTranslit(source: company.address)  , style: context.textTheme.titleSmall),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Gap(TSizes.base),
+                      ],
+                    );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

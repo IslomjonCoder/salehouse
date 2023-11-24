@@ -1,12 +1,3 @@
-// To parse this JSON data, do
-//
-//     final objectModel = objectModelFromJson(jsonString);
-
-import 'dart:convert';
-
-ObjectModel objectModelFromJson(String str) => ObjectModel.fromJson(json.decode(str));
-
-String objectModelToJson(ObjectModel data) => json.encode(data.toJson());
 
 class ObjectModel {
   int id;
