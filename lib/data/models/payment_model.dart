@@ -30,7 +30,6 @@ class PaymentModel {
   });
 
   factory PaymentModel.fromJson(Map<String, dynamic> json) {
-    print(json["data"].map((x) => Datum.fromJson(x)));
     return PaymentModel(
       currentPage: json["current_page"],
       data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),

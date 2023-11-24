@@ -58,4 +58,6 @@ class TLocalStorageKeys {
   static const String token = 'token';
   static const String userId = 'userId';
   static const String isFirstTime = 'isFirstTime';
+  // regions
+  static const String regions = 'regions';
 }

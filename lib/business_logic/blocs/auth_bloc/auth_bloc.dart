@@ -25,7 +25,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onLogin(AuthLogin event, Emitter<AuthState> emit) async {
     emit(AuthLoginLoading());
-    print('login ${event.login} ${event.password}');
     try {
       // await Future.delayed(const Duration(seconds: 2));
       // throw Exception('Incorrect login or password');
@@ -40,11 +39,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoginSuccess(userToken: userToken));
     }
     on ErrorException catch (e) {
-      print(e);
       emit(AuthLoginError(error: e.message));
     }
     catch (e) {
-      print(e.runtimeType);
       if (e is ErrorException) {
         emit(AuthLoginError(error: e.message));
         return;

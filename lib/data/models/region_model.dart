@@ -1,12 +1,3 @@
-// To parse this JSON data, do
-//
-//     final regionModel = regionModelFromJson(jsonString);
-
-import 'dart:convert';
-
-RegionModel regionModelFromJson(String str) => RegionModel.fromJson(json.decode(str));
-
-String regionModelToJson(RegionModel data) => json.encode(data.toJson());
 
 class RegionModel {
   int id;
