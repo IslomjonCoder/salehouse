@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BlocObjectsScreen extends StatelessWidget {
@@ -7,7 +8,10 @@ class BlocObjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bloc Objects'),
+        leading: IconButton(onPressed: (){
+          Scaffold.of(context).openDrawer();
+        }, icon: const Icon(Icons.menu)),
+        title: const Text('Blok Obyektlari'),
       ),
     );
   }

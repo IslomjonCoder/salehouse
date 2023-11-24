@@ -7,7 +7,10 @@ class HomesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Homes'),
+        leading: IconButton(onPressed: (){
+          Scaffold.of(context).openDrawer();
+        }, icon: const Icon(Icons.menu)),
+        title: const Text('Uylar'),
       ),
     );
   }

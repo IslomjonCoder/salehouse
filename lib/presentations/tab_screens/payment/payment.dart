@@ -1,7 +1,9 @@
+import 'package:crm/presentations/tab_screen/tab_screen.dart';
 import 'package:flutter/material.dart';
 
-class ContractsScreen extends StatelessWidget {
-  const ContractsScreen({super.key});
+
+class PaymentScreen extends StatelessWidget {
+  const PaymentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,7 @@ class ContractsScreen extends StatelessWidget {
         leading: IconButton(onPressed: (){
           Scaffold.of(context).openDrawer();
         }, icon: const Icon(Icons.menu)),
-        title: const Text('Shartnomalar'),
+        title: const Text("To'lovlar Ro'yxati"),
       ),
     );
   }
