@@ -1,3 +1,4 @@
+import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,8 @@ class TRoundedContainer extends StatelessWidget {
     this.radius = TSizes.cardRadiusSm,
     this.child,
     this.showBorder = false,
-    this.borderColor = Colors.black,
-    this.backgroundColor = Colors.white,
+    this.borderColor = TColors.tBlack,
+    this.backgroundColor = TColors.tWhite,
     this.padding,
     this.margin,
     this.showShadow = true,

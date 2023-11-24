@@ -36,7 +36,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     // await TLocalStorage.remove(tokenKey);
     await Future.delayed(const Duration(seconds: 2));
 
-
     TLocalStorage.getString(tokenKey).then((value) {
       if (value != null) {
         context.pushReplacementNamed(RouteNames.tabBox);
@@ -69,7 +68,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
     );
   }
-
 
   @override
   void dispose() {

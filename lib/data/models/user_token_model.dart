@@ -21,7 +21,6 @@ class UserToken {
   }
 
   factory UserToken.fromJson(Map<String, dynamic> map) {
-    print(map['']);
     return UserToken(
       accessToken: map['access_token'] as String,
       tokenType: map['token_type'] as String,

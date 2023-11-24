@@ -20,8 +20,7 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
-
-        listener: (context, state)async {
+        listener: (context, state) async {
           if (state is AuthLoginError) {
             context.pop();
             QuickAlert.show(
@@ -38,7 +37,7 @@ class LoginScreen extends StatelessWidget {
               barrierDismissible: false,
             );
           }
-          if (state is AuthLoginSuccess){
+          if (state is AuthLoginSuccess) {
             context.pop();
             await QuickAlert.show(
                 context: context,
@@ -46,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                 animType: QuickAlertAnimType.slideInDown,
                 autoCloseDuration: const Duration(seconds: 1));
             TLocalStorage.saveString(tokenKey, state.userToken.accessToken);
-            if(!context.mounted) return;
+            if (!context.mounted) return;
             context.pushReplacementNamed(RouteNames.tabBox);
           }
         },
@@ -120,14 +119,7 @@ class NickTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: context.read<AuthBloc>().nicknameController,
-      decoration: InputDecoration(
-        hintText: TTexts.nick,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        filled: true,
-        fillColor: Colors.white,
-      ),
+      decoration: InputDecoration(hintText: TTexts.nick),
     );
   }
 }
@@ -142,11 +134,8 @@ class PasswordTextField extends StatelessWidget {
       obscureText: !context.watch<VisiblePasswordBloc>().passwordVisible,
       decoration: InputDecoration(
         hintText: TTexts.password,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        filled: true,
-        fillColor: Colors.white,
+
+
         suffixIcon: IconButton(
           icon: Icon(
             context.watch<VisiblePasswordBloc>().passwordVisible
@@ -164,7 +153,6 @@ class PasswordTextField extends StatelessWidget {
         }
         return null;
       },
-
     );
     // GlobalTextField(
     //   hintText: TTexts.password,
@@ -188,17 +176,11 @@ class LoginButton extends StatelessWidget {
       width: double.infinity,
       child: FilledButton(
         onPressed: onPressed,
-        style: FilledButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
         child: const Text(TTexts.login),
       ),
     );
   }
 }
-
 
 class VisiblePasswordBloc with ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
