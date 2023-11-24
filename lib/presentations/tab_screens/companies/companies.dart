@@ -35,7 +35,16 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
           }
           else if (state.status.isFailure) {
             return Center(
-              child: Text(state.error.toString()),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(state.error.toString()),
+                  FilledButton(onPressed: () {
+
+                  },
+                  child: Text('Try Again'),)
+                ],
+              ),
             );
           }
           return Padding(

@@ -5,6 +5,7 @@ class ContractState {
   ContractModel? contractModel;
   List<ContractUser> contracts;
   int currentPage;
+  bool nextPageLoading;
   String error;
 
   ContractState({
@@ -12,6 +13,7 @@ class ContractState {
     this.contracts = const [],
     this.contractModel,
     this.currentPage = 1,
+    this.nextPageLoading= false,
     this.error = '',
   });
 
@@ -20,6 +22,7 @@ class ContractState {
     ContractModel? contractModel,
     List<ContractUser>? data,
     int? currentPage,
+    bool? nextPageLoading,
     String? error,
 
   }) {
@@ -28,6 +31,7 @@ class ContractState {
       contractModel: contractModel ?? this.contractModel,
       contracts: data ?? contracts,
       currentPage: currentPage ?? this.currentPage,
+      nextPageLoading: nextPageLoading ?? this.nextPageLoading,
       error: error ?? this.error,
     );
   }
