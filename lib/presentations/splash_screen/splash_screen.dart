@@ -4,7 +4,6 @@ import 'package:crm/utils/constants/image_strings.dart';
 import 'package:crm/utils/local_storage/storage_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
-import 'package:gap/gap.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,14 +29,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     // Start the animation
     _animationController.forward();
 
-    });
     check();
   }
 
   void check() async {
     // await TLocalStorage.remove(tokenKey);
     await Future.delayed(const Duration(seconds: 2));
-
 
     TLocalStorage.getString(tokenKey).then((value) {
       if (value != null) {
@@ -71,7 +68,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ),
     );
   }
-
 
   @override
   void dispose() {
