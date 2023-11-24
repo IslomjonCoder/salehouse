@@ -1,13 +1,13 @@
 import 'package:crm/presentations/auth/login.dart';
 import 'package:crm/presentations/splash_screen/splash_screen.dart';
-import 'package:crm/presentations/tab_box/tab_box.dart';
+import 'package:crm/presentations/tab_screen/tab_screen.dart';
 import 'package:crm/presentations/tab_screens/bloc_objects/bloc_objects.dart';
 import 'package:crm/presentations/tab_screens/blocs/blocs.dart';
 import 'package:crm/presentations/tab_screens/companies/companies.dart';
 import 'package:crm/presentations/tab_screens/contracts/contracts.dart';
 import 'package:crm/presentations/tab_screens/free_homes/free_homes.dart';
 import 'package:crm/presentations/tab_screens/homes/homes.dart';
-import 'package:crm/presentations/tab_screens/tab_home/tab_home.dart';
+import 'package:crm/presentations/tab_screens/payment/payment.dart';
 import 'package:flutter/material.dart';
 
 class RouteNames {
@@ -32,9 +32,9 @@ class AppRoutes {
       case RouteNames.login:
         return MaterialPageRoute(builder: (context) => const LoginScreen());
       case RouteNames.tabHome:
-        return MaterialPageRoute(builder: (context) => const TabHomeScreen());
+        return MaterialPageRoute(builder: (context) => const PaymentScreen());
       case RouteNames.tabBox:
-        return MaterialPageRoute(builder: (context) => const TabBox());
+        return MaterialPageRoute(builder: (context) => const TabScreen());
       case RouteNames.freeHomes:
         return MaterialPageRoute(builder: (context) => const FreeHomesScreen());
       case RouteNames.homes:

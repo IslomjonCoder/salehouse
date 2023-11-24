@@ -7,7 +7,10 @@ class BlocsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Blocs'),
+        leading: IconButton(onPressed: (){
+          Scaffold.of(context).openDrawer();
+        }, icon: const Icon(Icons.menu)),
+        title: const Text('Bloklar'),
       ),
     );
   }
