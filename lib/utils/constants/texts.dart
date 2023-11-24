@@ -4,7 +4,7 @@ class TTexts {
  // -- Login Texts --
   static const String login = 'Kirish';
   static const String password = 'Parol';
-  static const String nick = 'Kirish';
+  static const String nick = 'Login';
   static const String nickValidate = 'Ismingizni kiriting';
   static const String passwordValidateLength = 'Parol uzunligi 6 ta belgidan iborat bo\'lishi kerak';
   static const String passwordValidateEmpty = 'Parolni kiriting';

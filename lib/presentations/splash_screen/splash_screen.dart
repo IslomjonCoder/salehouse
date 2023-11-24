@@ -1,22 +1,25 @@
+import 'package:crm/presentations/routes/routes.dart';
+import 'package:crm/utils/constants/api_constants.dart';
 import 'package:crm/utils/constants/image_strings.dart';
+import 'package:crm/utils/local_storage/storage_utility.dart';
 import 'package:flutter/material.dart';
+import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:gap/gap.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  SplashScreenState createState() => SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
-
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -24,26 +27,29 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
 
+    // Start the animation
     _animationController.forward();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      // Navigator.pushReplacement(
-      //   context,
-        // MaterialPageRoute(builder: (context) => const HomeScreen()),
-      // );
-    });
+    check();
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
+  void check() async {
+    // await TLocalStorage.remove(tokenKey);
+    await Future.delayed(const Duration(seconds: 2));
+
+
+    TLocalStorage.getString(tokenKey).then((value) {
+      if (value != null) {
+        context.pushReplacementNamed(RouteNames.tabBox);
+      } else {
+        context.pushReplacementNamed(RouteNames.login);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
@@ -62,5 +68,11 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 }
