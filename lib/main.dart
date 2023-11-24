@@ -3,6 +3,7 @@ import 'package:crm/business_logic/blocs/companies_bloc/companies_bloc.dart';
 import 'package:crm/business_logic/blocs/contracts_bloc/contract_bloc.dart';
 import 'package:crm/business_logic/blocs/free_homes/free_homes_bloc.dart';
 import 'package:crm/business_logic/blocs/general_bloc/general_bloc.dart';
+import 'package:crm/business_logic/blocs/objects_bloc/objects_bloc.dart';
 import 'package:crm/business_logic/blocs/payment_bloc/payment_bloc.dart';
 import 'package:crm/business_logic/blocs/regions_bloc/regions_bloc.dart';
 import 'package:crm/business_logic/blocs/search_bloc/search_bloc.dart';
@@ -42,6 +43,8 @@ print('main');
       providers: [
         BlocProvider<RegionsBloc>(create: (context) => RegionsBloc()..add(RegionsInitialEvent())),
         BlocProvider<CompaniesBloc>(create: (context) => CompaniesBloc()..add(GetCompaniesEvent())),
+        BlocProvider<ObjectsBloc>(create: (context) => ObjectsBloc()..add(GetObjectsEvent())),
+
         BlocProvider<TabCubit>(create: (context) => TabCubit()),
         // BlocProvider<SearchBloc>(create: (context) => SearchBloc()..add(SearchValueChanged(''))),
         BlocProvider(create: (context) => AuthBloc()),

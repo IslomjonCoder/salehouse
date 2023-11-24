@@ -1,4 +1,5 @@
 import 'package:crm/utils/constants/colors.dart';
+import 'package:crm/utils/theme/custom_themes/appbar_theme.dart';
 import 'package:crm/utils/theme/custom_themes/button_theme.dart';
 import 'package:crm/utils/theme/custom_themes/card_theme.dart';
 import 'package:crm/utils/theme/custom_themes/input_decoration_theme.dart';
@@ -21,5 +22,6 @@ class TAppTheme {
     outlinedButtonTheme: TButtonTheme.outlinedButtonTheme,
     inputDecorationTheme: TInputDecorationTheme.inputDecorationTheme,
     textTheme: GoogleFonts.interTextTheme(),
+    appBarTheme: TAppbarTheme.appbarTheme,
   );
 }
