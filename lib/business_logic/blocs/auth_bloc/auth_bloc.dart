@@ -14,6 +14,7 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+
   final ApiService _apiService = ApiService();
   final TextEditingController nicknameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
