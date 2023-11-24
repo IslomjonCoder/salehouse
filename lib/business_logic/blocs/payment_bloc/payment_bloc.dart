@@ -18,8 +18,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   _onPaymentInitialEvent(PaymentInitialEvent event, Emitter<PaymentState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      print('payment');
-      await Future.delayed(const Duration(seconds: 10));
       final dailyBenefit = await apiService.payment();
       final response = await apiService.payments();
        List<Datum>data = [];
@@ -27,7 +25,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
       emit(state.copyWith(
           status: Status.success, paymentModel: response, dailyBenefit: dailyBenefit, data: data));
-      print('payment');
     } catch (e) {
       emit(state.copyWith(status: Status.failure, error: e.toString()));
     }

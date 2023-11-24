@@ -38,7 +38,6 @@ class FreeHomesBloc extends Bloc<FreeHomesEvent, FreeHomesState> {
     } catch (e) {
       if (e is DioException) {
         TLoggerHelper.info("Dio Error");
-        print(e.type);
         final message = handlerError(e);
         emit(state.copyWith(status: Status.failure, error: message));
         return;
@@ -66,7 +65,6 @@ class FreeHomesBloc extends Bloc<FreeHomesEvent, FreeHomesState> {
     } catch (e) {
       if (e is DioException) {
         TLoggerHelper.info("Dio Error");
-        print(e.type);
         final message = handlerError(e);
         emit(state.copyWith(status: Status.failure, error: message,blockId: event.blockId));
         return;

@@ -1,4 +1,3 @@
-import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/business_logic/cubits/tab_cubit/tab_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -12,6 +12,7 @@ import 'package:crm/data/models/user_token_model.dart';
 import 'package:crm/utils/constants/api_constants.dart';
 import 'package:crm/utils/exceptions/exceptions.dart';
 import 'package:crm/utils/local_storage/storage_utility.dart';
+import 'package:crm/utils/logging/logger.dart';
 import 'package:dio/dio.dart';
 
 class ApiService {
@@ -35,14 +36,20 @@ class ApiService {
 
   Future<void> refreshToken() async {
     try {
+
+
       final login = await TLocalStorage.getString(loginKey);
       final password = await TLocalStorage.getString(passwordKey);
-      final response = await dio.post('login', data: {"login": login, "password": password});
+
+      final response = await dio.post(loginEndpoint, data: {"login": login, "password": password});
+      TLoggerHelper.info('refreshToken');
       if (response.data['access_token'] != null) {
         final newToken = response.data['access_token'];
+
         TLocalStorage.saveString(tokenKey, newToken);
       }
     } catch (error) {
+      TLoggerHelper.error(error.toString());
       if (error is DioException) {
         final message = errorHandler(error);
         throw message;
