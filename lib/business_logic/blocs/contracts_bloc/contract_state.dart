@@ -26,7 +26,7 @@ class ContractState {
     return ContractState(
       status: status ?? this.status,
       contractModel: contractModel ?? this.contractModel,
-      contracts: data ?? this.contracts,
+      contracts: data ?? contracts,
       currentPage: currentPage ?? this.currentPage,
       error: error ?? this.error,
     );

@@ -15,6 +15,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:crm/presentations/common_widgets/rounded_container.dart';
+import 'package:crm/utils/theme/app_theme.dart';
+import 'package:crm/presentations/splash_screen/splash_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const App());
@@ -56,7 +62,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
 
@@ -65,3 +72,4 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+
