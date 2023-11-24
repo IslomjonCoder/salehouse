@@ -1,7 +1,11 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/business_logic/cubits/tab_cubit/tab_cubit.dart';
+import 'package:crm/presentations/routes/routes.dart';
+import 'package:crm/utils/constants/api_constants.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/image_strings.dart';
+import 'package:crm/utils/local_storage/storage_utility.dart';
+import 'package:crm/widgets/global_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +30,11 @@ class TabScreenState extends State<TabScreen> {
         children: [
           DrawerHeader(
             child: Image.asset(TImages.appLogo),
+          ),
+          const NavigationDrawerDestination(
+            backgroundColor: TColors.tPrimaryColor,
+            icon: Icon(CupertinoIcons.macwindow),
+            label: Text("Bosh Sahifa"),
           ),
           const NavigationDrawerDestination(
             backgroundColor: TColors.tPrimaryColor,
@@ -57,18 +66,21 @@ class TabScreenState extends State<TabScreen> {
             label: Text("Kompaniyalar"),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 10),
-            child: Row(
-              children: [
-                Icon(CupertinoIcons.person_alt),
-                Text("Toshmatjon Admin"),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 50),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 100),
             child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  scaffoldKey.currentState?.closeDrawer();
+                  GlobalDialog.showSystemDialog(context,
+                      onOkPressed: (){
+                        TLocalStorage.remove(tokenKey);
+                        context.pushReplacementNamed(RouteNames.login);
+                      },
+                      title: 'Chiqish',
+                      message: 'Accountdan chiqishni istaysizmi?',
+                      okButtonText: 'Xa',
+                      buttonColor: Colors.red,
+                      cancelButtonText: 'Yo\'q');
+                },
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Icon(Icons.logout), Text("Chiqish")],
