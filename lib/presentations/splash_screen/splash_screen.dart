@@ -29,7 +29,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
     Future.delayed(const Duration(seconds: 2), () {
       // Navigator.pushReplacement(
       //   context,
-        // MaterialPageRoute(builder: (context) => const HomeScreen()),
+      // MaterialPageRoute(builder: (context) => const HomeScreen()),
       // );
     });
   }
@@ -50,13 +50,14 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(TImages.appLogo),
-              const Text("CRM ga xush kelibsiz"),
-              const Gap(20),
-              CircularProgressIndicator(
-                strokeWidth: 10,
-                backgroundColor: Colors.grey.shade300,
+              Image.asset(TImages.appLogo, height: 300),
+              Text(
+                "CRM ga xush kelibsiz",
+                style: Theme.of(context).textTheme.titleLarge,
+                textAlign: TextAlign.center,
               ),
+              // const Gap(20),
+              // CircularProgressIndicator(),
             ],
           ),
         ),
