@@ -34,7 +34,7 @@ class ApiService {
           // TLocalStorage.saveString(tokenKey, userToken.data['access_token']);
           handler.next(options);
         },
-        onError: (DioError e, handler) {
+        onError: (DioException e, handler) {
           print(e.type.name);
           handler.next(e);
         }));
