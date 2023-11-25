@@ -4,6 +4,7 @@ import 'package:crm/presentations/routes/routes.dart';
 import 'package:crm/utils/constants/api_constants.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/image_strings.dart';
+import 'package:crm/utils/constants/sizes.dart';
 import 'package:crm/utils/local_storage/storage_utility.dart';
 import 'package:crm/widgets/global_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,29 +66,33 @@ class TabScreenState extends State<TabScreen> {
             icon: Icon(CupertinoIcons.briefcase_fill),
             label: Text("Kompaniyalar"),
           ),
+          Gap(kToolbarHeight),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 100),
+            padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
             child: OutlinedButton(
-                onPressed: () {
-                  scaffoldKey.currentState?.closeDrawer();
-                  GlobalDialog.showSystemDialog(context,
-                      onOkPressed: (){
-                        TLocalStorage.remove(tokenKey);
-                        context.pushReplacementNamed(RouteNames.login);
-                      },
-                      title: 'Chiqish',
-                      message: 'Accountdan chiqishni istaysizmi?',
-                      okButtonText: 'Xa',
-                      buttonColor: Colors.red,
-                      cancelButtonText: 'Yo\'q');
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Icon(Icons.logout), Text("Chiqish")],
-                )),
-          )
+              onPressed: () {
+                scaffoldKey.currentState?.closeDrawer();
+                GlobalDialog.showSystemDialog(
+                  context,
+                  onOkPressed: () {
+                    TLocalStorage.remove(tokenKey);
+                    context.pushReplacementNamed(RouteNames.login);
+                  },
+                  title: 'Chiqish',
+                  message: 'Accountdan chiqishni istaysizmi?',
+                  okButtonText: 'Xa',
+                  buttonColor: Colors.red,
+                  cancelButtonText: 'Yo\'q',
+                );
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Icon(Icons.logout), Text("Chiqish")],
+              ),
+            ),
+          ),
         ],
-        onDestinationSelected:( index) {
+        onDestinationSelected: (index) {
           context.read<TabCubit>().changeTab(index);
           scaffoldKey.currentState?.closeDrawer();
         },

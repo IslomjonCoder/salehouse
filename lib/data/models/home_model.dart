@@ -1,22 +1,14 @@
-// To parse this JSON data, do
-//
-//     final homeModel = homeModelFromJson(jsonString);
 
-import 'dart:convert';
-
-HomeModel homeModelFromJson(String str) => HomeModel.fromJson(json.decode(str));
-
-String homeModelToJson(HomeModel data) => json.encode(data.toJson());
 
 class HomeModel {
   int currentPage;
-  List<Datum> data;
+  List<HomeModelUser> data;
   String firstPageUrl;
   int from;
   int lastPage;
   String lastPageUrl;
   List<Link> links;
-  String nextPageUrl;
+  String? nextPageUrl;
   String path;
   int perPage;
   dynamic prevPageUrl;
@@ -41,7 +33,7 @@ class HomeModel {
 
   factory HomeModel.fromJson(Map<String, dynamic> json) => HomeModel(
     currentPage: json["current_page"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    data: List<HomeModelUser>.from(json["data"].map((x) => HomeModelUser.fromJson(x))),
     firstPageUrl: json["first_page_url"],
     from: json["from"],
     lastPage: json["last_page"],
@@ -72,7 +64,7 @@ class HomeModel {
   };
 }
 
-class Datum {
+class HomeModelUser {
   int id;
   String blockId;
   String number;
@@ -89,7 +81,7 @@ class Datum {
   String? planId;
   String isvalute;
 
-  Datum({
+  HomeModelUser({
     required this.id,
     required this.blockId,
     required this.number,
@@ -107,7 +99,7 @@ class Datum {
     required this.isvalute,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory HomeModelUser.fromJson(Map<String, dynamic> json) => HomeModelUser(
     id: json["id"],
     blockId: json["block_id"],
     number: json["number"],

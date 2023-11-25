@@ -1,4 +1,3 @@
-import 'package:crm/business_logic/blocs/general_bloc/general_bloc.dart';
 import 'package:crm/data/models/block_model.dart';
 import 'package:crm/data/models/company_model.dart';
 import 'package:crm/data/models/contract_model.dart';
@@ -16,28 +15,32 @@ import 'package:crm/utils/logging/logger.dart';
 import 'package:dio/dio.dart';
 
 class ApiService {
-  final Dio dio = Dio(BaseOptions(
-    baseUrl: baseUrl,
-    receiveDataWhenStatusError: true,
-    headers: headers,
-    connectTimeout: const Duration(seconds: 5),
-    receiveTimeout: const Duration(seconds: 5),
-    sendTimeout: const Duration(seconds: 5),
-  ))
-    ..interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
-      final token = await TLocalStorage.getString(tokenKey);
-      if (token != null) {
-        options.headers['Authorization'] = 'Bearer $token';
-      }
-      handler.next(options);
-    }, onError: (DioException e, handler) {
-      handler.next(e);
-    }));
+  final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: baseUrl,
+      receiveDataWhenStatusError: true,
+      headers: headers,
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 5),
+      sendTimeout: const Duration(seconds: 5),
+    ),
+  )..interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = await TLocalStorage.getString(tokenKey);
+          if (token != null) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+          handler.next(options);
+        },
+        onError: (DioException e, handler) => handler.next(e),
+      ),
+    );
+
+  ApiService();
 
   Future<void> refreshToken() async {
     try {
-
-
       final login = await TLocalStorage.getString(loginKey);
       final password = await TLocalStorage.getString(passwordKey);
 
@@ -130,9 +133,9 @@ class ApiService {
   }
 
 // https://ctsbackend.uz/api/boss/data/payments
-  Future<PaymentModel> payments() async {
+  Future<PaymentModel> payments(int page) async {
     try {
-      final response = await dio.get(paymentsEndpoint);
+      final response = await dio.get(paymentsEndpoint, queryParameters: {'page': page});
       if (response.statusCode == 200) {
         return PaymentModel.fromJson(response.data['data']);
       }
@@ -140,7 +143,7 @@ class ApiService {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {
         await refreshToken();
-        final response = await ApiService().payments();
+        final response = await ApiService().payments(page);
         return response;
       }
       throw errorHandler(e);
@@ -269,7 +272,8 @@ class ApiService {
       final response = await dio.get("$blockEndpoint/$id");
       if (response.statusCode == 200) {
         return List<SingleBlocModel>.from(
-            response.data['data'].map((x) => SingleBlocModel.fromJson(x)));
+          response.data['data'].map((x) => SingleBlocModel.fromJson(x)),
+        );
       }
       throw 'Status code: ${response.statusCode}';
     } on DioException catch (e) {
@@ -289,7 +293,8 @@ class ApiService {
       final response = await dio.get("$freeHomesEndpoint/$id");
       if (response.statusCode == 200) {
         return List<FreeHomeModel>.from(
-            response.data['data'].map((x) => FreeHomeModel.fromJson(x)));
+          response.data['data'].map((x) => FreeHomeModel.fromJson(x)),
+        );
       }
       throw 'Status code: ${response.statusCode}';
     } on DioException catch (e) {
@@ -304,9 +309,9 @@ class ApiService {
     }
   }
 
-  Future<HomeModel> home(int id) async {
+  Future<HomeModel> home({required int page, int bloc = 1}) async {
     try {
-      final response = await dio.get("$homesEndpoint/$id");
+      final response = await dio.get("$homesEndpoint/$bloc", queryParameters: {'page': page});
       if (response.statusCode == 200) {
         return HomeModel.fromJson(response.data['data']);
       }
@@ -314,7 +319,7 @@ class ApiService {
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {
         await refreshToken();
-        final response = await ApiService().home(id);
+        final response = await ApiService().home(page: page, bloc: bloc);
         return response;
       }
       throw errorHandler(e);

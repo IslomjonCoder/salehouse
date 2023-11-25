@@ -1,38 +1,43 @@
-part of 'contract_bloc.dart';
+part of 'homes_bloc.dart';
 
-class ContractState {
+
+class HomesState {
   Status status;
-  ContractModel? contractModel;
-  List<ContractUser> contracts;
+  HomeModel? contractModel;
+  List<HomeModelUser> contracts;
   int currentPage;
   bool nextPageLoading;
   String error;
+  int blocIndex;
 
-  ContractState({
+  HomesState({
     this.status = Status.initial,
     this.contracts = const [],
     this.contractModel,
     this.currentPage = 1,
-    this.nextPageLoading= false,
+    this.nextPageLoading = false,
     this.error = '',
+    this.blocIndex = 1,
   });
 
-  ContractState copyWith({
+  HomesState copyWith({
     Status? status,
-    ContractModel? contractModel,
-    List<ContractUser>? data,
+    HomeModel? contractModel,
+    List<HomeModelUser>? contracts,
     int? currentPage,
     bool? nextPageLoading,
     String? error,
+    int? blocIndex,
 
   }) {
-    return ContractState(
+    return HomesState(
       status: status ?? this.status,
       contractModel: contractModel ?? this.contractModel,
-      contracts: data ?? contracts,
+      contracts: contracts ?? this.contracts,
       currentPage: currentPage ?? this.currentPage,
       nextPageLoading: nextPageLoading ?? this.nextPageLoading,
       error: error ?? this.error,
+      blocIndex: blocIndex ?? this.blocIndex,
     );
   }
 }

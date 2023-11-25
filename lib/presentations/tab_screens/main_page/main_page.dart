@@ -6,7 +6,6 @@ import 'package:crm/utils/constants/image_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 
@@ -19,19 +18,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool hideCost = false;
-  ScrollController scrollController = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        if (context.read<PaymentBloc>().state.paymentModel?.nextPageUrl != null) {
-          context.read<PaymentBloc>().add(PaymentNextPageEvent());
-        }
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,91 +137,91 @@ class _MainPageState extends State<MainPage> {
                     "To'lovlar",
                     style: context.headlineSmall,
                   )),
-                  state.data.isEmpty
-                      ? Center(
-                          child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(TImages.empty),
-                            // No documents translate to uzbek
-                            Text(
-                              "Malumotlar bo'sh",
-                              style: context.titleLarge?.copyWith(
-                                color: TColors.tPrimaryColor,
-                              ),
-                            ),
-                          ],
-                        ))
-                      : RefreshIndicator(
-                          onRefresh: () async {
-                            setState(() {});
-                          },
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            controller: scrollController,
-                            separatorBuilder: (BuildContext context, int index) {
-                              return const Gap(10);
-                            },
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: state.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                                onTap: () {},
-                                leading: Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        ),
-                                  child: Center(
-                                    child: AvatarImage(
-                                      backgroundColor: TColors.tPrimaryColor,
-                                      size: 80,
-                                      child: Text(
-                                        state.data[index].contract.custom.name[0].toUpperCase() + state.data[index].contract.custom.surname[0].toUpperCase(),
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w900,
-                                          color: Colors.white70
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ),
-                                title: Text(
-                                  state.paymentModel!.data[index].sum,
-                                  style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                                ),
-                                subtitle: Text(
-                                 "${state.data[index].contract.custom.name} ${state.data[index].contract.custom.surname}",
-                                  style: context.bodyMedium,
-                                ),
-                                trailing: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: TColors.tPrimaryColor,
-                                      ),
-                                      child: Text(
-                                        state.paymentModel!.data[index].types.name,
-                                        style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold,fontSize: 12,color: Colors.white),
-                                      ),
-                                    ),
-                                    Text(
-                                      state.data[index].date,
-                                      style: context.bodySmall?.copyWith(color: Colors.grey, fontSize: 12),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                  // state.data.isEmpty
+                  //     ? Center(
+                  //         child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         mainAxisSize: MainAxisSize.min,
+                  //         children: [
+                  //           SvgPicture.asset(TImages.empty),
+                  //           // No documents translate to uzbek
+                  //           Text(
+                  //             "Malumotlar bo'sh",
+                  //             style: context.titleLarge?.copyWith(
+                  //               color: TColors.tPrimaryColor,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ))
+                  //     : RefreshIndicator(
+                  //         onRefresh: () async {
+                  //           setState(() {});
+                  //         },
+                  //         child: ListView.separated(
+                  //           shrinkWrap: true,
+                  //           controller: context.read<PaymentBloc>().scrollController,
+                  //           separatorBuilder: (BuildContext context, int index) {
+                  //             return const Gap(10);
+                  //           },
+                  //           physics: const BouncingScrollPhysics(),
+                  //           itemCount: state.data.length,
+                  //           itemBuilder: (BuildContext context, int index) {
+                  //             return ListTile(
+                  //               contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  //               onTap: () {},
+                  //               leading: Container(
+                  //                   width: 50,
+                  //                   height: 50,
+                  //                   decoration: BoxDecoration(
+                  //                       borderRadius: BorderRadius.circular(10),
+                  //                       ),
+                  //                 child: Center(
+                  //                   child: AvatarImage(
+                  //                     backgroundColor: TColors.tPrimaryColor,
+                  //                     size: 80,
+                  //                     child: Text(
+                  //                       state.data[index].contract.custom.name[0].toUpperCase() + state.data[index].contract.custom.surname[0].toUpperCase(),
+                  //                       style: const TextStyle(
+                  //                         fontSize: 20,
+                  //                         fontWeight: FontWeight.w900,
+                  //                         color: Colors.white70
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 )
+                  //               ),
+                  //               title: Text(
+                  //                 state.paymentModel!.data[index].sum,
+                  //                 style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                  //               ),
+                  //               subtitle: Text(
+                  //                "${state.data[index].contract.custom.name} ${state.data[index].contract.custom.surname}",
+                  //                 style: context.bodyMedium,
+                  //               ),
+                  //               trailing: Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.end,
+                  //                 children: [
+                  //                   Container(
+                  //                     padding: const EdgeInsets.symmetric(horizontal: 5),
+                  //                     decoration: BoxDecoration(
+                  //                       borderRadius: BorderRadius.circular(5),
+                  //                       color: TColors.tPrimaryColor,
+                  //                     ),
+                  //                     child: Text(
+                  //                       state.paymentModel!.data[index].types.name,
+                  //                       style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold,fontSize: 12,color: Colors.white),
+                  //                     ),
+                  //                   ),
+                  //                   Text(
+                  //                     state.data[index].date,
+                  //                     style: context.bodySmall?.copyWith(color: Colors.grey, fontSize: 12),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             );
+                  //           },
+                  //         ),
+                  //       ),
                 ],
               ),
             );

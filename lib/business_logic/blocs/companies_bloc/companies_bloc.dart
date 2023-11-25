@@ -1,10 +1,7 @@
-import 'dart:async';
-
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:crm/data/models/company_model.dart';
 import 'package:crm/data/service/api_service.dart';
 import 'package:crm/utils/constants/enums.dart';
-import 'package:meta/meta.dart';
 
 part 'companies_event.dart';
 

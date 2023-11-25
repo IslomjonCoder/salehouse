@@ -1,4 +1,5 @@
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:crm/business_logic/blocs/general_bloc/general_bloc.dart';
 import 'package:crm/data/models/free_home_model.dart';
 import 'package:crm/data/service/api_service.dart';
@@ -18,12 +19,11 @@ class FreeHomesBloc extends Bloc<FreeHomesEvent, FreeHomesState> {
 
   FreeHomesBloc() : super(FreeHomesState()) {
     on<GetFreeHomesEvent>(_onGetFreeHomesEvent);
-    on<GetFreeHomesByBlockIdEvent>(_onGetFreeHomesByBlockIdEvent);
+    on<GetFreeHomesByBlockIdEvent>(_onGetFreeHomesByBlockIdEvent, transformer: droppable());
   }
 
   _onGetFreeHomesEvent(GetFreeHomesEvent event, Emitter<FreeHomesState> emit) async {
     emit(state.copyWith(status: Status.loading));
-
     // Try to get data from the cache first
     dynamic cachedData = cacheManager.get('freeHomesData');
     if (cachedData != null) {

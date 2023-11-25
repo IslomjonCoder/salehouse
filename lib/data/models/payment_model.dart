@@ -163,7 +163,7 @@ class Custom {
   String middlename;
   String clientType;
   String phone;
-  String phone2;
+  String? phone2;
 
   Custom({
     required this.id,

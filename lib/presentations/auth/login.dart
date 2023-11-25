@@ -119,7 +119,7 @@ class NickTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: context.read<AuthBloc>().nicknameController,
-      decoration: InputDecoration(hintText: TTexts.nick),
+      decoration: const InputDecoration(hintText: TTexts.nick),
     );
   }
 }

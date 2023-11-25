@@ -2,14 +2,12 @@ import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/data/models/contract_model.dart';
 import 'package:crm/presentations/tab_screens/contracts/card_widget.dart';
 import 'package:crm/utils/constants/colors.dart';
-import 'package:crm/utils/constants/image_strings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 class ContractDetailScreen extends StatefulWidget {
-  const ContractDetailScreen({Key? key, required this.contract}) : super(key: key);
+  const ContractDetailScreen({super.key, required this.contract});
 
   final ContractUser contract;
 
@@ -103,7 +101,6 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 250,
                   crossAxisSpacing: 8,
-                  childAspectRatio: 1.0,
                 ),
                 itemCount: reportCardData.length,
                 itemBuilder: (context, index) {
@@ -139,7 +136,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
                 ],
               ),
             ),
-            Gap(50),
+            const Gap(50),
           ],
         ),
       ),

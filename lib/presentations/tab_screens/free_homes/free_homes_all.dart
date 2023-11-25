@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crm/business_logic/blocs/free_homes/free_homes_bloc.dart';
 import 'package:crm/business_logic/blocs/general_bloc/general_bloc.dart';
 import 'package:crm/presentations/routes/routes.dart';
+import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/enums.dart';
 import 'package:crm/utils/constants/image_strings.dart';
 import 'package:crm/utils/constants/sizes.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FreeHomesAll extends StatefulWidget {
   const FreeHomesAll({super.key});
@@ -33,25 +35,31 @@ class _FreeHomesAllState extends State<FreeHomesAll> {
         title: const Text('Uylar'),
       ),
       body: BlocConsumer<FreeHomesBloc, FreeHomesState>(
-          buildWhen: (prev, current) {
-            return current.status.isSuccess || current.status.isLoading || current.status.isFailure;
-          },
+          buildWhen: (prev, current) => current.status.isSuccess || current.status.isLoading || current.status.isFailure,
           builder: (context, state) {
             if (state.status.isLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                  child: LoadingAnimationWidget.inkDrop(
+                    color: TColors.tPrimaryColor,
+                    size: TSizes.lg
+                  ));
             } else if (state.status.isFailure) {
               return Center(
-                child: Text(state.error ?? ''),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      state.error.toString(),
+                      textAlign: TextAlign.center,
+                    ),
+                    const Gap(TSizes.base),
+                    FilledButton(
+                      onPressed: () => context.read<GeneralBloc>().add(GeneralInitialEvent()),
+                      child: const Text('Qayta Urinish'),
+                    )
+                  ],
+                ),
               );
-              // return
-              //   NoConnection(
-              //   onTap: () {
-              //     if (context.read<FreeHomesBloc>().state.blockId != null){
-              //       context.read<FreeHomesBloc>().add(GetFreeHomesByBlockIdEvent(blockId: context.read<FreeHomesBloc>().state.blockId!));
-              //     }
-              //   },
-              //   errorText: state.error,
-              // );
             }
             return state.data.isEmpty
                 ? const Center(child: Text("Bo'sh uylar mavjud emas"))
@@ -91,11 +99,6 @@ class _FreeHomesAllState extends State<FreeHomesAll> {
                                     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                                     itemBuilder: (context, index) {
                       final model = state.data[index];
-                      final generalBlock = context.read<GeneralBloc>().state;
-                      print(generalBlock.blocs
-                          .where((element) => element.id.toString() == model.blockId)
-                          .length);
-                      print(model.blockId);
                       return GestureDetector(
                         onTap: () {
                           context.pushNamed(RouteNames.freeHomeDetail, arguments: model);
