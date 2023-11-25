@@ -9,7 +9,7 @@ import 'package:ticket_widget/ticket_widget.dart';
 class DetailScreen extends StatelessWidget {
   final FreeHomeModel homeModel;
 
-  const DetailScreen({Key? key, required this.homeModel}) : super(key: key);
+  const DetailScreen({super.key, required this.homeModel});
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,16 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:crm/business_logic/blocs/companies_bloc/companies_bloc.dart';
 import 'package:crm/business_logic/blocs/free_homes/free_homes_bloc.dart';
 import 'package:crm/business_logic/blocs/general_bloc/general_bloc.dart';
 import 'package:crm/presentations/routes/routes.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/enums.dart';
+import 'package:crm/utils/constants/sizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:translit/translit.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class FreeHomesScreen extends StatelessWidget {
   const FreeHomesScreen({super.key});
@@ -19,13 +21,8 @@ class FreeHomesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        scrolledUnderElevation: 0,
-        centerTitle: true,
         leading: IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+            onPressed: () => Scaffold.of(context).openDrawer(),
             icon: const Icon(Icons.menu)),
         title: const Text("Bo'sh Uylar"),
       ),
@@ -34,33 +31,42 @@ class FreeHomesScreen extends StatelessWidget {
             current.status.isSuccess || current.status.isFailure || current.status.isLoading,
         builder: (context, state) {
           if (state.status.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state.status.isFailure) {
             return Center(
-              child: Text(state.error ?? ''),
+                child: LoadingAnimationWidget.inkDrop(
+                  color: TColors.tPrimaryColor,
+                  size: TSizes.lg,
+                ));
+          } else if (state.status.isFailure) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    state.error.toString(),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Gap(TSizes.base),
+                  FilledButton(
+                    onPressed: () => context.read<GeneralBloc>().add(GeneralInitialEvent()),
+                    child: const Text('Qayta Urinish'),
+                  )
+                ],
+              ),
             );
-            // return
-            //   NoConnection(
-            //   onTap: () {
-            //     context.read<GeneralBloc>().add(GeneralInitialEvent());
-            //   },
-            //   errorText: state.error??'',
-            // );
           }
 
           return ListView.builder(
             itemCount: state.blocs.length,
             itemBuilder: (BuildContext context, int index) {
               final blockModel = state.blocs[index];
-              final regionName = state.regions
-                  .firstWhere((region) => region.id.toString() == blockModel.objects.regionId)
-                  .name;
-              final transliteratedRegionName = Translit().toTranslit(source: regionName);
+              // final regionName = context.read<RegionsBloc>().state.regions
+              //     .firstWhere((region) => region.id.toString() == blockModel.objects.regionId)
+              //     .name;
+              // final transliteratedRegionName = Translit().toTranslit(source: regionName);
 
-              final companyName = state.companies
-                  .firstWhere((company) => company.id.toString() == blockModel.objects.companiesId)
-                  .name;
+              // final companyName = context.read<CompaniesBloc>().state.companies
+              //     .firstWhere((company) => company.id.toString() == blockModel.objects.companiesId)
+              //     .name;
               return GestureDetector(
                 onTap: () {
                   context
@@ -107,7 +113,7 @@ class FreeHomesScreen extends StatelessWidget {
                             ),
                             const Gap(10),
                             Text(
-                              companyName,
+                              context.read<CompaniesBloc>().state.companies.firstWhere((element) => element.id.toString() ==  blockModel.objects.companiesId).name,
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Colors.indigo.shade600, fontWeight: FontWeight.bold),
                             ),
@@ -119,19 +125,22 @@ class FreeHomesScreen extends StatelessWidget {
                                     const Icon(CupertinoIcons.map_pin_ellipse),
                                     Text("  Viloyat: ",style: context.titleMedium?.copyWith(fontWeight: FontWeight.bold),),
                                     Text(
-                                      transliteratedRegionName,
+                                      blockModel.objects.city,
                                       style: Theme.of(context).textTheme.bodyMedium,
                                     ),
                                   ],
                                 ),
                                 const Gap(10),
                                 Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Icon(Icons.location_on_rounded),
                                     Text("  Shaxar: ",style: context.titleMedium?.copyWith(fontWeight: FontWeight.bold),),
-                                    Text(
-                                      blockModel.objects.city,
-                                      style: Theme.of(context).textTheme.bodyMedium,
+                                    Flexible(
+                                      child: Text(
+                                        blockModel.objects.address,
+                                        style: Theme.of(context).textTheme.bodyMedium,
+                                      ),
                                     ),
                                   ],
                                 ),

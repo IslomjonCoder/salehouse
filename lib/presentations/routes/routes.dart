@@ -1,5 +1,6 @@
 import 'package:crm/data/models/free_home_model.dart';
 import 'package:crm/presentations/auth/login.dart';
+import 'package:crm/presentations/image_screen/image_screen.dart';
 import 'package:crm/presentations/splash_screen/splash_screen.dart';
 import 'package:crm/presentations/tab_screen/tab_screen.dart';
 import 'package:crm/presentations/tab_screens/bloc_objects/bloc_objects.dart';
@@ -30,7 +31,7 @@ class RouteNames {
   static const String tabHome = '/tabHome';
   static const String freeHomesAll = '/freeHomesAll';
   static const String freeHomeDetail = '/freeHomeDetail';
-
+  static const String imagePreview = '/imagePreview';
 }
 
 class AppRoutes {
@@ -40,6 +41,9 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const SplashScreen());
       case RouteNames.login:
         return MaterialPageRoute(builder: (context) => const LoginScreen());
+      case RouteNames.imagePreview:
+        return MaterialPageRoute(
+            builder: (context) => ImagePreviewScreen(imageUrl: settings.arguments as String));
       case RouteNames.tabHome:
         return MaterialPageRoute(builder: (context) => const PaymentScreen());
       case RouteNames.tabBox:
@@ -59,9 +63,13 @@ class AppRoutes {
       case RouteNames.freeHomesAll:
         return MaterialPageRoute(builder: (context) => const FreeHomesAll());
       case RouteNames.freeHomeDetail:
-        return MaterialPageRoute(builder: (context) =>  DetailScreen(homeModel: settings.arguments as FreeHomeModel));
+        return MaterialPageRoute(
+          builder: (context) => DetailScreen(homeModel: settings.arguments as FreeHomeModel),
+        );
       case RouteNames.contractDetail:
-        return MaterialPageRoute(builder: (context) =>  ContractDetailScreen(contract: settings.arguments as ContractUser));
+        return MaterialPageRoute(
+            builder: (context) =>
+                ContractDetailScreen(contract: settings.arguments as ContractUser));
     }
     return MaterialPageRoute(
       builder: (context) => const Scaffold(

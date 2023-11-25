@@ -1,7 +1,4 @@
 import 'package:crm/data/models/block_model.dart';
-import 'package:crm/data/models/company_model.dart';
-import 'package:crm/data/models/object_model.dart';
-import 'package:crm/data/models/region_model.dart';
 import 'package:crm/data/service/api_service.dart';
 import 'package:crm/utils/constants/enums.dart';
 import 'package:dio/dio.dart';
@@ -21,18 +18,10 @@ class GeneralBloc extends Bloc<GeneralEvent, GeneralState> {
   _onGeneralInitialEvent(GeneralInitialEvent event, Emitter<GeneralState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final response = await Future.wait([
-        apiService.regions(),
-        apiService.companies(),
-        apiService.objects(),
-        apiService.blocks(),
-      ]);
+      final response = await apiService.blocks();
 
       emit(state.copyWith(
-        regions: (response)[0] as List<RegionModel>,
-        companies: (response)[1] as List<CompanyModel>,
-        objects: (response)[2] as List<ObjectModel>,
-        blocs: (response)[3] as List<BlockModel>,
+        blocs: response,
         status: Status.success,
       ));
     } catch (e) {

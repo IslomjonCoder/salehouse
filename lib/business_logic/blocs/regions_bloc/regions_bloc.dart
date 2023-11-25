@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
 
-import 'package:crm/data/models/object_model.dart';
 import 'package:crm/data/models/region_model.dart';
 import 'package:crm/data/service/api_service.dart';
 import 'package:crm/utils/constants/enums.dart';
@@ -27,14 +25,14 @@ class RegionsBloc extends Bloc<RegionsEvent, RegionsState> {
       if (regions != null) {
         emit(state.copyWith(
             status: Status.success,
-            regions: List.from(jsonDecode(regions)).map((e) => RegionModel.fromJson(e)).toList()));
+            regions: List.from(jsonDecode(regions)).map((e) => RegionModel.fromJson(e)).toList(),),);
 
         return;
       }
 
       final response = await apiService.regions();
       TLocalStorage.saveString(TLocalStorageKeys.regions,
-          response.map((e) => jsonEncode(e.toJson())).toList().toString());
+          response.map((e) => jsonEncode(e.toJson())).toList().toString(),);
       TLoggerHelper.info(response.toString());
       emit(state.copyWith(status: Status.success, regions: response));
     } catch (e) {

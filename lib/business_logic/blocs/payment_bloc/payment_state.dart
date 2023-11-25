@@ -6,6 +6,8 @@ class PaymentState {
   final PaymentModel? paymentModel;
   final List<Datum> data;
   final String? error;
+  final int currentPage;
+  final bool nextPageLoading;
 
   const PaymentState({
     this.dailyBenefit = 0,
@@ -13,6 +15,8 @@ class PaymentState {
     this.paymentModel,
     this.data = const [],
     this.error,
+    this.currentPage = 1,
+    this.nextPageLoading = false,
   });
 
   PaymentState copyWith({
@@ -21,6 +25,8 @@ class PaymentState {
     PaymentModel? paymentModel,
     List<Datum>? data,
     String? error,
+    int? currentPage,
+    bool? nextPageLoading,
   }) {
     return PaymentState(
       status: status ?? this.status,
@@ -28,6 +34,8 @@ class PaymentState {
       paymentModel: paymentModel ?? this.paymentModel,
       data: data ?? this.data,
       error: error ?? this.error,
+      currentPage: currentPage ?? this.currentPage,
+      nextPageLoading: nextPageLoading ?? this.nextPageLoading,
     );
   }
 }

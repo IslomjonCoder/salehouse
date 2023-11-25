@@ -24,25 +24,26 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu)),
+            onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu),),
         title: const Text("Kompaniyalar Ro'yxati"),
       ),
       body: BlocBuilder<CompaniesBloc, CompaniesState>(
         builder: (context, state) {
           if (state.status.isLoading) {
-            return LoadingAnimationWidget.bouncingBall(
-                color: TColors.tPrimaryColor, size: TSizes.lg);
-          }
-          else if (state.status.isFailure) {
+            return Center(child: LoadingAnimationWidget.inkDrop(color: TColors.tPrimaryColor, size: TSizes.lg));
+          } else if (state.status.isFailure) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(state.error.toString()),
-                  FilledButton(onPressed: () {
-
-                  },
-                  child: Text('Try Again'),)
+                  const Gap(TSizes.md),
+                  FilledButton(
+                    onPressed: () {
+                      context.read<CompaniesBloc>().add(GetCompaniesEvent());
+                    },
+                    child: const Text('Qayta urinish'),
+                  ),
                 ],
               ),
             );
@@ -75,7 +76,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                             ],
                           ),
                           IconButton.filled(
-                              onPressed: () {}, icon: const Icon(CupertinoIcons.briefcase_fill))
+                              onPressed: () {}, icon: const Icon(CupertinoIcons.briefcase_fill),),
                         ],
                       ),
                     ),
@@ -88,35 +89,36 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                     itemBuilder: (context, index) {
                       final company = state.companies[index];
                       return Column(
-                      children: [
-                        // const Gap(TSizes.base),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Card(
-                            elevation: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.all(TSizes.md),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    company.name ,
-                                    style: context.textTheme.titleMedium
-                                        ?.copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    company.director,
-                                    style: context.textTheme.titleMedium,
-                                  ),
-                                  Text( Translit().toTranslit(source: company.address)  , style: context.textTheme.titleSmall),
-                                ],
+                        children: [
+                          // const Gap(TSizes.base),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Card(
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.all(TSizes.md),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      company.name,
+                                      style: context.textTheme.titleMedium
+                                          ?.copyWith(fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      company.director,
+                                      style: context.textTheme.titleMedium,
+                                    ),
+                                    Text(Translit().toTranslit(source: company.address),
+                                        style: context.textTheme.titleSmall,),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const Gap(TSizes.base),
-                      ],
-                    );
+                          const Gap(TSizes.base),
+                        ],
+                      );
                     },
                   ),
                 ),
