@@ -9,7 +9,6 @@ import 'package:crm/widgets/global_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -30,7 +29,6 @@ class TabScreenState extends State<TabScreen> {
         children: [
           DrawerHeader(
             child: Image.asset(TImages.appLogo),
-
           ),
           const NavigationDrawerDestination(
             backgroundColor: TColors.tPrimaryColor,
@@ -41,14 +39,6 @@ class TabScreenState extends State<TabScreen> {
             backgroundColor: TColors.tPrimaryColor,
             icon: Icon(CupertinoIcons.home),
             label: Text("Uylar"),
-          ),
-          const NavigationDrawerDestination(
-            icon: Icon(CupertinoIcons.square_grid_2x2_fill),
-            label: Text("Bloklar"),
-          ),
-          const NavigationDrawerDestination(
-            icon: Icon(CupertinoIcons.rectangle_3_offgrid_fill),
-            label: Text("Obyektlar"),
           ),
           const NavigationDrawerDestination(
             icon: Icon(CupertinoIcons.home),
@@ -62,11 +52,6 @@ class TabScreenState extends State<TabScreen> {
             icon: Icon(CupertinoIcons.rectangle_fill_on_rectangle_angled_fill),
             label: Text("To'lov"),
           ),
-          const NavigationDrawerDestination(
-            icon: Icon(CupertinoIcons.briefcase_fill),
-            label: Text("Kompaniyalar"),
-          ),
-          const Gap(kToolbarHeight),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
             child: OutlinedButton(
@@ -80,7 +65,6 @@ class TabScreenState extends State<TabScreen> {
                       MaterialPageRoute(builder: (context) => const LoginScreen()),
                           (route) => false,
                     );
-
                   },
                   title: 'Chiqish',
                   message: 'Accountdan chiqishni istaysizmi?',

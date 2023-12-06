@@ -5,6 +5,7 @@ import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/enums.dart';
 import 'package:crm/utils/constants/image_strings.dart';
 import 'package:crm/utils/constants/sizes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,9 +53,9 @@ class _MainPageState extends State<MainPage> {
               ),
             );
           }
-          if (state.status == Status.failure) {
-            return NoConnection(errorText: state.error ?? "");
-          }
+          // if (state.status == Status.failure) {
+          //   return NoConnection(errorText: state.error ?? "");
+          // }
           return SmartRefresher(
                 controller: _refreshController,
                 onRefresh: () async {
@@ -87,25 +88,25 @@ class _MainPageState extends State<MainPage> {
                           children: [
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                                padding: const EdgeInsets.only(top: 10.0),
                                 child: RichText(
                                     text: TextSpan(children: [
                                   TextSpan(
                                     text: hideCost
                                         ? '------'
-                                        : context
+                                        :NumberFormat.simpleCurrency(
+                                        locale: 'uz_UZ',
+                                        name: 'UZS',
+                                        decimalDigits: 0,
+                                    ).format(context
                                             .read<PaymentBloc>()
                                             .state
                                             .dailyBenefit
-                                            .toDouble()
-                                            .toStringAsFixed(2),
+                                            .toDouble(),)
+                                            .toString(),
                                     style:
                                         context.displaySmall?.copyWith(color: TColors.tPrimaryColor),
                                   ),
-                                  TextSpan(
-                                    text: ' so\'m',
-                                    style: context.labelLarge?.copyWith(color: TColors.tPrimaryColor),
-                                  )
                                 ])),
                               ),
                             ),
