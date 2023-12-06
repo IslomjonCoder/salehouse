@@ -15,53 +15,53 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
 
   ContractBloc() : super(ContractState()) {
     on<ContractEventInitial>(_onContractEventInitial);
-    on<NextPageEvent>(
-      _onNextPageEvent,
-      transformer: droppable(),
-    );
-    initialize();
+    // on<NextPageEvent>(
+    //   _onNextPageEvent,
+    //   transformer: droppable(),
+    // );
+    // initialize();
   }
 
-  initialize() async {
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        if (state.contractModel != null) {
-          if (state.currentPage < state.contractModel!.lastPage) {
-            add(NextPageEvent(state.currentPage + 1));
-          }
-        }
-      }
-    });
-  }
+  // initialize() async {
+  //   scrollController.addListener(() {
+  //     if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+  //       if (state.contractModel != null) {
+  //         if (state.currentPage < state.contractModel!.lastPage) {
+  //           add(NextPageEvent(state.currentPage + 1));
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 
-  _onNextPageEvent(NextPageEvent event, Emitter<ContractState> emit) async {
-    emit(state.copyWith(nextPageLoading: true));
-    try {
-      final contract = await apiService.getContractByPage(event.page);
-      final contracts = contract.data;
-      emit(
-        state.copyWith(
-          contractModel: contract,
-          status: Status.success,
-          data: state.contracts..addAll(contracts),
-          currentPage: event.page,
-          nextPageLoading: false,
-        ),
-      );
-    } catch (e) {
-      emit(state.copyWith(status: Status.failure, error: e.toString(), nextPageLoading: false));
-    }
-  }
+  // _onNextPageEvent(NextPageEvent event, Emitter<ContractState> emit) async {
+  //   emit(state.copyWith(nextPageLoading: true));
+  //   try {
+  //     final contract = await apiService.getContractByPage(event.page);
+  //     final contracts = contract.data;
+  //     emit(
+  //       state.copyWith(
+  //         contractModel: contract,
+  //         status: Status.success,
+  //         data: state.contracts..addAll(contracts),
+  //         currentPage: event.page,
+  //         nextPageLoading: false,
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     emit(state.copyWith(status: Status.failure, error: e.toString(), nextPageLoading: false));
+  //   }
+  // }
 
   _onContractEventInitial(ContractEventInitial event, Emitter<ContractState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final contract = await apiService.getContractByPage(1);
+      final contract = await apiService.contracts();
       emit(
         state.copyWith(
-          contractModel: contract,
+          // contractModel: contract,
           status: Status.success,
-          data: contract.data,
+          data: contract,
           currentPage: 1,
         ),
       );

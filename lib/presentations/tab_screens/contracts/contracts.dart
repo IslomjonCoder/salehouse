@@ -111,11 +111,11 @@ class ContractsScreen extends StatelessWidget {
                   const Gap(TSizes.base),
                   FilledButton(
                     onPressed: () {
-                      if (state.contractModel == null) {
+                      // if (state.contractModel == null) {
                         context.read<ContractBloc>().add(ContractEventInitial());
-                      } else {
-                        context.read<ContractBloc>().add(NextPageEvent(state.currentPage + 1));
-                      }
+                      // } else {
+                      //   context.read<ContractBloc>().add(NextPageEvent(state.currentPage + 1));
+                      // }
                     },
                     child: const Text('Try Again'),
                   ),
@@ -234,13 +234,13 @@ class ContractsScreen extends StatelessWidget {
                   itemCount: state.contracts.length,
                 ),
               ),
-              Visibility(
-                visible: context.read<ContractBloc>().state.nextPageLoading,
-                child: LoadingAnimationWidget.staggeredDotsWave(
-                  color: TColors.tPrimaryColor,
-                  size: TSizes.lg,
-                ),
-              ),
+              // Visibility(
+              //   visible: context.read<ContractBloc>().state.nextPageLoading,
+              //   child: LoadingAnimationWidget.staggeredDotsWave(
+              //     color: TColors.tPrimaryColor,
+              //     size: TSizes.lg,
+              //   ),
+              // ),
             ],
           );
         },
