@@ -15,10 +15,12 @@ class ContractDetailScreen extends StatefulWidget {
   State<ContractDetailScreen> createState() => _ContractDetailScreenState();
 }
 
+
 class _ContractDetailScreenState extends State<ContractDetailScreen> {
   String formatDate(DateTime date) {
     return DateFormat('yyyy/MM/dd').format(date);
   }
+
   late List<ReportCardDataModel> reportCardData;
 
   @override
@@ -28,26 +30,22 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
       ReportCardDataModel(
         title: 'Jami to\'lov',
         price: (double.parse(widget.contract.sum) - double.parse(widget.contract.discount)).toString(),
-        icon: const Icon(Icons.attach_money),
         cardColor: TColors.tPrimaryColor,
       ),
       ReportCardDataModel(
         title: "Boshlang'ich to'lov",
         price: widget.contract.price.toString(),
-        icon: const Icon(Icons.attach_money),
         cardColor: Colors.green,
       ),
       ReportCardDataModel(
         title: ''
             "1m² uchun to'lov",
         price: widget.contract.square.toString(),
-        icon: const Icon(Icons.attach_money),
         cardColor: Colors.orange,
       ),
       ReportCardDataModel(
         title: "Qolgan to'lov",
         price: widget.contract.left.toString(),
-        icon: const Icon(Icons.attach_money),
         cardColor: Colors.red,
       ),
     ];
@@ -98,6 +96,8 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 2,
               child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 250,
                   crossAxisSpacing: 8,
@@ -107,7 +107,6 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
                   return ReportCard(
                     title: reportCardData[index].title,
                     price: reportCardData[index].price.toString(),
-                    icon: reportCardData[index].icon.toString(),
                     cardColor: reportCardData[index].cardColor,
                   );
                 },
@@ -140,17 +139,6 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // Navigator.push(
-      //     //     context, MaterialPageRoute(builder: (context) =>  PaymentGraphScreen(contract: widget.contract,)));
-      //   },
-      //   backgroundColor: TColors.tPrimaryColor,
-      //   child: SvgPicture.asset(
-      //     TImages.graphUp,
-      //     colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-      //   ),
-      // ),
     );
   }
 }

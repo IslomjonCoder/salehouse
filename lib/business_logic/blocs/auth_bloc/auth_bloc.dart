@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:crm/data/models/user_token_model.dart';
 import 'package:crm/data/service/api_service.dart';
 import 'package:crm/utils/constants/api_constants.dart';
@@ -37,6 +36,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       TLocalStorage.saveString(loginKey, event.login);
       TLocalStorage.saveString(passwordKey, event.password);
       emit(AuthLoginSuccess(userToken: userToken));
+      nicknameController.clear();
+      passwordController.clear();
     }
     on ErrorException catch (e) {
       emit(AuthLoginError(error: e.message));

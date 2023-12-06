@@ -47,6 +47,7 @@ class LoginScreen extends StatelessWidget {
             TLocalStorage.saveString(tokenKey, state.userToken.accessToken);
             if (!context.mounted) return;
             context.pushReplacementNamed(RouteNames.tabBox);
+
           }
         },
         child: Container(
@@ -117,9 +118,19 @@ class NickTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      textInputAction: TextInputAction.next,
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       controller: context.read<AuthBloc>().nicknameController,
       decoration: const InputDecoration(hintText: TTexts.nick),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return TTexts.nickValidate;
+        }
+        return null;
+      },
     );
   }
 }
@@ -132,10 +143,20 @@ class PasswordTextField extends StatelessWidget {
     return TextFormField(
       controller: context.read<AuthBloc>().passwordController,
       obscureText: !context.watch<VisiblePasswordBloc>().passwordVisible,
+      textInputAction: TextInputAction.done,
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      onFieldSubmitted: (value) {
+        if (Form.of(context).validate()) {
+          context.read<AuthBloc>().add(AuthLogin(
+            login: context.read<AuthBloc>().nicknameController.text,
+            password: context.read<AuthBloc>().passwordController.text,
+          ));
+        }
+      },
       decoration: InputDecoration(
         hintText: TTexts.password,
-
-
         suffixIcon: IconButton(
           icon: Icon(
             context.watch<VisiblePasswordBloc>().passwordVisible
@@ -149,17 +170,11 @@ class PasswordTextField extends StatelessWidget {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return TTexts.nickValidate;
+          return TTexts.passwordValidateEmpty;
         }
         return null;
       },
     );
-    // GlobalTextField(
-    //   hintText: TTexts.password,
-    //   validator: TValidator.validatePassword,
-    //   controller: context.read<AuthBloc>().passwordController,
-    //   obscureText: true,
-    // );
   }
 }
 

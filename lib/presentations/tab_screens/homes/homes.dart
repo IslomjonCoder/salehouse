@@ -11,11 +11,12 @@ import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomesScreen extends StatelessWidget {
-  const HomesScreen({super.key});
+   const HomesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -70,7 +71,6 @@ class HomesScreen extends StatelessWidget {
                             label: Text(state.blocs[index].name), onSelected: (value) {
                           if (value) {
                             context.read<HomesBloc>().add(SelectBlocEvent(index+1));
-
                           }
                         });
                       },
@@ -103,7 +103,7 @@ class HomesScreen extends StatelessWidget {
                               ),
                               child: Center(
                                   child: Text(
-                                "A Bloc $index-uy",
+                                "${state.contracts[index].blockId}- Blok / ${index+1}-uy",
                                 style: context.textTheme.titleMedium
                                     ?.copyWith(fontWeight: FontWeight.w700, color: Colors.white),
                               )),

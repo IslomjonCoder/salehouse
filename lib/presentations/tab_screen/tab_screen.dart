@@ -1,6 +1,5 @@
-import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/business_logic/cubits/tab_cubit/tab_cubit.dart';
-import 'package:crm/presentations/routes/routes.dart';
+import 'package:crm/presentations/auth/login.dart';
 import 'package:crm/utils/constants/api_constants.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/image_strings.dart';
@@ -31,6 +30,7 @@ class TabScreenState extends State<TabScreen> {
         children: [
           DrawerHeader(
             child: Image.asset(TImages.appLogo),
+
           ),
           const NavigationDrawerDestination(
             backgroundColor: TColors.tPrimaryColor,
@@ -66,7 +66,7 @@ class TabScreenState extends State<TabScreen> {
             icon: Icon(CupertinoIcons.briefcase_fill),
             label: Text("Kompaniyalar"),
           ),
-          Gap(kToolbarHeight),
+          const Gap(kToolbarHeight),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
             child: OutlinedButton(
@@ -76,7 +76,11 @@ class TabScreenState extends State<TabScreen> {
                   context,
                   onOkPressed: () {
                     TLocalStorage.remove(tokenKey);
-                    context.pushReplacementNamed(RouteNames.login);
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                          (route) => false,
+                    );
+
                   },
                   title: 'Chiqish',
                   message: 'Accountdan chiqishni istaysizmi?',

@@ -16,6 +16,7 @@ class TImages {
   static const String statistic = 'assets/images/statistic.json';
   static const String connection = 'assets/images/connection.json';
   static const String wind = 'assets/images/wind.json';
+  static const String main = 'assets/images/main.json';
 
 
   // -- Icons --
