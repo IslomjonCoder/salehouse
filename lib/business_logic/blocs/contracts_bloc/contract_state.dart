@@ -2,18 +2,18 @@ part of 'contract_bloc.dart';
 
 class ContractState {
   Status status;
-  ContractModel? contractModel;
+  // ContractModel? contractModel;
   List<ContractUser> contracts;
-  int currentPage;
-  bool nextPageLoading;
+  // int currentPage;
+  // bool nextPageLoading;
   String error;
 
   ContractState({
     this.status = Status.initial,
     this.contracts = const [],
-    this.contractModel,
-    this.currentPage = 1,
-    this.nextPageLoading= false,
+    // this.contractModel,
+    // this.currentPage = 1,
+    // this.nextPageLoading= false,
     this.error = '',
   });
 
@@ -28,10 +28,10 @@ class ContractState {
   }) {
     return ContractState(
       status: status ?? this.status,
-      contractModel: contractModel ?? this.contractModel,
+      // contractModel: contractModel ?? this.contractModel,
       contracts: data ?? contracts,
-      currentPage: currentPage ?? this.currentPage,
-      nextPageLoading: nextPageLoading ?? this.nextPageLoading,
+      // currentPage: currentPage ?? this.currentPage,
+      // nextPageLoading: nextPageLoading ?? this.nextPageLoading,
       error: error ?? this.error,
     );
   }

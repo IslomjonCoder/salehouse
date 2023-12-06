@@ -172,23 +172,24 @@ class ApiService {
     }
   }
 
-  Future<ContractModel> contracts() async {
-    try {
+  Future<List<ContractUser>> contracts() async {
+    // try {
       final response = await dio.get(contractsEndpoint);
-      if (response.statusCode == 200) {
-        return ContractModel.fromJson(response.data['data']);
-      }
-      throw 'Status code: ${response.statusCode}';
-    } on DioException catch (e) {
-      if (e.type == DioExceptionType.badResponse) {
-        await refreshToken();
-        final response = await ApiService().contracts();
-        return response;
-      }
-      throw errorHandler(e);
-    } catch (e) {
-      rethrow;
-    }
+      // if (response.statusCode == 200) {
+        return List<ContractUser>.from(response.data['data'].map((x) => ContractUser.fromJson(x)));
+        // return ContractModel.fromJson(response.data['data']);
+      // }
+      // throw 'Status code: ${response.statusCode}';
+    // } on DioException catch (e) {
+    //   if (e.type == DioExceptionType.badResponse) {
+    //     await refreshToken();
+    //     final response = await ApiService().contracts();
+    //     return response;
+    //   }
+    //   throw errorHandler(e);
+    // } catch (e) {
+    //   rethrow;
+    // }
   }
 
   Future<ContractModel> getContractByPage(int page) async {
