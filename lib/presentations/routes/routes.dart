@@ -3,9 +3,6 @@ import 'package:crm/presentations/auth/login.dart';
 import 'package:crm/presentations/image_screen/image_screen.dart';
 import 'package:crm/presentations/splash_screen/splash_screen.dart';
 import 'package:crm/presentations/tab_screen/tab_screen.dart';
-import 'package:crm/presentations/tab_screens/bloc_objects/bloc_objects.dart';
-import 'package:crm/presentations/tab_screens/blocs/blocs.dart';
-import 'package:crm/presentations/tab_screens/companies/companies.dart';
 import 'package:crm/presentations/tab_screens/contracts/contract_detail.dart';
 import 'package:crm/presentations/tab_screens/contracts/contracts.dart';
 import 'package:crm/presentations/tab_screens/free_homes/free_home_detail.dart';
@@ -51,15 +48,15 @@ class AppRoutes {
       case RouteNames.freeHomes:
         return MaterialPageRoute(builder: (context) => const FreeHomesScreen());
       case RouteNames.homes:
-        return MaterialPageRoute(builder: (context) => const HomesScreen());
-      case RouteNames.blocs:
-        return MaterialPageRoute(builder: (context) => const BlocsScreen());
-      case RouteNames.companies:
-        return MaterialPageRoute(builder: (context) => const CompaniesScreen());
+        return MaterialPageRoute(builder: (context) =>  const HomesScreen());
+      // case RouteNames.blocs:
+      //   return MaterialPageRoute(builder: (context) => const BlocsScreen());
+      // case RouteNames.companies:
+      //   return MaterialPageRoute(builder: (context) => const CompaniesScreen());
       case RouteNames.contracts:
         return MaterialPageRoute(builder: (context) => const ContractsScreen());
-      case RouteNames.blocObjects:
-        return MaterialPageRoute(builder: (context) => const BlocObjectsScreen());
+      // case RouteNames.blocObjects:
+      //   return MaterialPageRoute(builder: (context) => const BlocObjectsScreen());
       case RouteNames.freeHomesAll:
         return MaterialPageRoute(builder: (context) => const FreeHomesAll());
       case RouteNames.freeHomeDetail:

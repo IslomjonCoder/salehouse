@@ -1,6 +1,5 @@
-import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/business_logic/cubits/tab_cubit/tab_cubit.dart';
-import 'package:crm/presentations/routes/routes.dart';
+import 'package:crm/presentations/auth/login.dart';
 import 'package:crm/utils/constants/api_constants.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/image_strings.dart';
@@ -10,7 +9,6 @@ import 'package:crm/widgets/global_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -43,14 +41,6 @@ class TabScreenState extends State<TabScreen> {
             label: Text("Uylar"),
           ),
           const NavigationDrawerDestination(
-            icon: Icon(CupertinoIcons.square_grid_2x2_fill),
-            label: Text("Bloklar"),
-          ),
-          const NavigationDrawerDestination(
-            icon: Icon(CupertinoIcons.rectangle_3_offgrid_fill),
-            label: Text("Obyektlar"),
-          ),
-          const NavigationDrawerDestination(
             icon: Icon(CupertinoIcons.home),
             label: Text("Bo'sh Uylar"),
           ),
@@ -62,11 +52,6 @@ class TabScreenState extends State<TabScreen> {
             icon: Icon(CupertinoIcons.rectangle_fill_on_rectangle_angled_fill),
             label: Text("To'lov"),
           ),
-          const NavigationDrawerDestination(
-            icon: Icon(CupertinoIcons.briefcase_fill),
-            label: Text("Kompaniyalar"),
-          ),
-          Gap(kToolbarHeight),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
             child: OutlinedButton(
@@ -76,7 +61,10 @@ class TabScreenState extends State<TabScreen> {
                   context,
                   onOkPressed: () {
                     TLocalStorage.remove(tokenKey);
-                    context.pushReplacementNamed(RouteNames.login);
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                          (route) => false,
+                    );
                   },
                   title: 'Chiqish',
                   message: 'Accountdan chiqishni istaysizmi?',

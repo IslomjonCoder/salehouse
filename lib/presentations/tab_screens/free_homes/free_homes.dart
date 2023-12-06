@@ -1,5 +1,4 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
-import 'package:crm/business_logic/blocs/companies_bloc/companies_bloc.dart';
 import 'package:crm/business_logic/blocs/free_homes/free_homes_bloc.dart';
 import 'package:crm/business_logic/blocs/general_bloc/general_bloc.dart';
 import 'package:crm/presentations/routes/routes.dart';
@@ -15,15 +14,13 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 class FreeHomesScreen extends StatelessWidget {
   const FreeHomesScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Scaffold.of(context).openDrawer(),
-            icon: const Icon(Icons.menu)),
+            onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu)),
         title: const Text("Bo'sh Uylar"),
       ),
       body: BlocBuilder<GeneralBloc, GeneralState>(
@@ -33,9 +30,9 @@ class FreeHomesScreen extends StatelessWidget {
           if (state.status.isLoading) {
             return Center(
                 child: LoadingAnimationWidget.inkDrop(
-                  color: TColors.tPrimaryColor,
-                  size: TSizes.lg,
-                ));
+              color: TColors.tPrimaryColor,
+              size: TSizes.lg,
+            ));
           } else if (state.status.isFailure) {
             return Center(
               child: Column(
@@ -49,7 +46,7 @@ class FreeHomesScreen extends StatelessWidget {
                   FilledButton(
                     onPressed: () => context.read<GeneralBloc>().add(GeneralInitialEvent()),
                     child: const Text('Qayta Urinish'),
-                  )
+                  ),
                 ],
               ),
             );
@@ -87,7 +84,7 @@ class FreeHomesScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -103,7 +100,7 @@ class FreeHomesScreen extends StatelessWidget {
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
-                                      ?.copyWith(fontWeight: FontWeight.bold,color: Colors.white),
+                                      ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   softWrap: false,
@@ -113,7 +110,7 @@ class FreeHomesScreen extends StatelessWidget {
                             ),
                             const Gap(10),
                             Text(
-                              context.read<CompaniesBloc>().state.companies.firstWhere((element) => element.id.toString() ==  blockModel.objects.companiesId).name,
+                              blockModel.objects.name,
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Colors.indigo.shade600, fontWeight: FontWeight.bold),
                             ),
@@ -123,7 +120,11 @@ class FreeHomesScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     const Icon(CupertinoIcons.map_pin_ellipse),
-                                    Text("  Viloyat: ",style: context.titleMedium?.copyWith(fontWeight: FontWeight.bold),),
+                                    Text(
+                                      "  Viloyat: ",
+                                      style: context.titleMedium
+                                          ?.copyWith(fontWeight: FontWeight.bold),
+                                    ),
                                     Text(
                                       blockModel.objects.city,
                                       style: Theme.of(context).textTheme.bodyMedium,
@@ -135,7 +136,11 @@ class FreeHomesScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Icon(Icons.location_on_rounded),
-                                    Text("  Shaxar: ",style: context.titleMedium?.copyWith(fontWeight: FontWeight.bold),),
+                                    Text(
+                                      "  Shaxar: ",
+                                      style: context.titleMedium
+                                          ?.copyWith(fontWeight: FontWeight.bold),
+                                    ),
                                     Flexible(
                                       child: Text(
                                         blockModel.objects.address,

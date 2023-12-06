@@ -23,7 +23,7 @@ class GlobalDialog {
             ? _androidDialog(context, title, message, okButtonText, backgroundColor, buttonColor,
             cancelButtonText, cancelButtonColor, onOkPressed)
             : _iosDialog(context, title, message, okButtonText, backgroundColor, buttonColor,
-            cancelButtonText, cancelButtonColor);
+            cancelButtonText, cancelButtonColor, onOkPressed);
       },
     );
   }
@@ -74,6 +74,7 @@ class GlobalDialog {
       Color buttonColor,
       String cancelButtonText,
       Color cancelButtonColor,
+      VoidCallback? onOkPressed
       ) {
     return CupertinoAlertDialog(
       title: Text(title),
@@ -85,7 +86,9 @@ class GlobalDialog {
           textColor: cancelButtonColor,
         ),
         _dialogButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: (){
+            onOkPressed?.call();
+          },
           text: okButtonText,
           textColor: buttonColor,
         ),
