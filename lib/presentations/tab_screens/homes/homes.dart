@@ -45,11 +45,11 @@ class HomesScreen extends StatelessWidget {
                   const Gap(TSizes.base),
                   FilledButton(
                     onPressed: () {
-                      if (state.contracts.isEmpty) {
+                      // if (state.contracts.isEmpty) {
                         context.read<HomesBloc>().add(HomesEventInitial());
-                      } else {
-                        context.read<HomesBloc>().add(NextPageEvent(state.currentPage + 1));
-                      }
+                      // } else {
+                      //   context.read<HomesBloc>().add(NextPageEvent(state.currentPage + 1));
+                      // }
                     },
                     child: const Text('Qayta Urinish'),
                   )
@@ -103,7 +103,7 @@ class HomesScreen extends StatelessWidget {
                               ),
                               child: Center(
                                   child: Text(
-                                "${state.contracts[index].blockId}- Blok / ${index+1}-uy",
+                                "${state.contracts[index].blockId}- Blok / ${home.number}-uy",
                                 style: context.textTheme.titleMedium
                                     ?.copyWith(fontWeight: FontWeight.w700, color: Colors.white),
                               )),
@@ -116,7 +116,7 @@ class HomesScreen extends StatelessWidget {
                                   style: context.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                                 ),
                                 Text(
-                                  "1|1|${home.square}m²",
+                                  "${home.stage}|${home.rooms}|${home.square}m²",
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
@@ -207,10 +207,12 @@ class HomesScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
-                                    color: home.islive == '0' ? Colors.green : Colors.blue,
+                                    color: formatStatusColor(home.status),
                                   ),
+                                  // i need switch case here
                                   child: Text(
-                                    home.islive == '0' ? "Bo'sh" : "Band",
+                                    formatStatus(home.status),
+                                    // home.islive == '0' ? "Bo'sh" : "Band",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium
@@ -227,12 +229,37 @@ class HomesScreen extends StatelessWidget {
                   separatorBuilder: (BuildContext context, int index) => const Gap(TSizes.sm),
                 ),
               ),
-              Visibility(visible: state.nextPageLoading,child: LoadingAnimationWidget.staggeredDotsWave(color:  TColors.tPrimaryColor, size: 30),)
+              // Visibility(visible: state.nextPageLoading,child: LoadingAnimationWidget.staggeredDotsWave(color:  TColors.tPrimaryColor, size: 30),)
             ],
           );
         },
       ),
     );
+  }
+
+  formatStatus (String status) {
+    switch (status) {
+      case "1":
+        return "Bo'sh";
+      case "2":
+        return "Band qilish";
+      case "3":
+        return "Sotilgan";
+      case "4":
+        return "Aktiv emas";
+    }
+  }
+  formatStatusColor (String status) {
+    switch (status) {
+      case "1":
+        return Colors.green;
+      case "2":
+        return Colors.blue;
+      case "3":
+        return Colors.orange;
+      case "4":
+        return Colors.red;
+    }
   }
 }
 

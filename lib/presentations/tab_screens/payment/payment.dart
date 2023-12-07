@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -51,13 +52,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     const Gap(TSizes.base),
                     FilledButton(
                       onPressed: () {
-                        if (state.paymentModel == null) {
+                        // if (state.paymentModel == null) {
                           context.read<PaymentBloc>().add(PaymentInitialEvent());
-                        } else {
-                          context
-                              .read<PaymentBloc>()
-                              .add(PaymentNextPageEvent(state.currentPage + 1));
-                        }
+                        // } else {
+                        //   context
+                        //       .read<PaymentBloc>()
+                        //       .add(PaymentNextPageEvent(state.currentPage + 1));
+                        // }
                       },
                       child: const Text('Qayta Urinish'),
                     )
@@ -120,10 +121,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       ),
                                     )),
                                 title: Text(
-                                  data.sum,
+                                  NumberFormat.simpleCurrency(locale: 'uz',name: 'so`m',decimalDigits: 0).format(double.parse(state.data[index].sum)),
                                   style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text(
+
                                   "${state.data[index].contract.custom.name} ${state.data[index].contract.custom.surname}",
                                   style: context.bodyMedium,
                                 ),
@@ -156,11 +158,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           ),
                         ),
                       ),
-                      Visibility(
-                        visible: state.nextPageLoading,
-                        child: LoadingAnimationWidget.staggeredDotsWave(
-                            color: TColors.tPrimaryColor, size: TSizes.lg),
-                      ),
+                      // Visibility(
+                      //   visible: state.nextPageLoading,
+                      //   child: LoadingAnimationWidget.staggeredDotsWave(
+                      //       color: TColors.tPrimaryColor, size: TSizes.lg),
+                      // ),
                     ],
                   );
           },

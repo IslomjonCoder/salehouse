@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
         // listenWhen: (previous, current) {},
         bloc: BlocProvider.of<PaymentBloc>(context),
         buildWhen: (previous, current) =>
-            current.status.isSuccess || current.status.isLoading || current.status.isFailure,
+        current.status.isSuccess || current.status.isLoading || current.status.isFailure,
         builder: (context, state) {
           if (state.status == Status.loading) {
             return Center(
@@ -57,11 +57,11 @@ class _MainPageState extends State<MainPage> {
           //   return NoConnection(errorText: state.error ?? "");
           // }
           return SmartRefresher(
-                controller: _refreshController,
-                onRefresh: () async {
-                  context.read<PaymentBloc>().add(PaymentInitialEvent());
-                  _refreshController.refreshCompleted();
-                },
+            controller: _refreshController,
+            onRefresh: () async {
+              context.read<PaymentBloc>().add(PaymentInitialEvent());
+              _refreshController.refreshCompleted();
+            },
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -80,7 +80,8 @@ class _MainPageState extends State<MainPage> {
                           ],
                           image: const DecorationImage(
                             image: AssetImage(TImages.cardBack),
-                            colorFilter: ColorFilter.mode(TColors.tPrimaryColor, BlendMode.softLight),
+                            colorFilter:
+                            ColorFilter.mode(TColors.tPrimaryColor, BlendMode.softLight),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -91,23 +92,26 @@ class _MainPageState extends State<MainPage> {
                                 padding: const EdgeInsets.only(top: 10.0),
                                 child: RichText(
                                     text: TextSpan(children: [
-                                  TextSpan(
-                                    text: hideCost
-                                        ? '------'
-                                        :NumberFormat.simpleCurrency(
-                                        locale: 'uz_UZ',
-                                        name: 'UZS',
-                                        decimalDigits: 0,
-                                    ).format(context
-                                            .read<PaymentBloc>()
-                                            .state
-                                            .dailyBenefit
-                                            .toDouble(),)
+                                      TextSpan(
+                                        text: hideCost
+                                            ? '------'
+                                            : NumberFormat.simpleCurrency(
+                                          locale: 'uz_UZ',
+                                          name: 'UZS',
+                                          decimalDigits: 0,
+                                        )
+                                            .format(
+                                          context
+                                              .read<PaymentBloc>()
+                                              .state
+                                              .dailyBenefit
+                                              .toDouble(),
+                                        )
                                             .toString(),
-                                    style:
-                                        context.displaySmall?.copyWith(color: TColors.tPrimaryColor),
-                                  ),
-                                ])),
+                                        style: context.displaySmall
+                                            ?.copyWith(color: TColors.tPrimaryColor),
+                                      ),
+                                    ])),
                               ),
                             ),
                             const Text("Kunlik tushum"),
@@ -128,13 +132,13 @@ class _MainPageState extends State<MainPage> {
                           },
                           icon: hideCost
                               ? const Icon(
-                                  CupertinoIcons.eye_slash,
-                                  color: Colors.white,
-                                )
+                            CupertinoIcons.eye_slash,
+                            color: Colors.white,
+                          )
                               : const Icon(
-                                  CupertinoIcons.eye,
-                                  color: Colors.white,
-                                ),
+                            CupertinoIcons.eye,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       const Positioned(
@@ -146,9 +150,33 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                   const Gap(20),
-                  Center(
-                    child: Lottie.asset(TImages.main),
-                  ),
+                  BlocBuilder<PaymentBloc, PaymentState>(
+                    builder: (context, state) {
+                      final models = state.data;
+                      // filter model date with current date and show only today
+                      final today = DateTime.now();
+                      final filteredModels = models.where((model) {
+                        final modelDate = DateTime.parse(model.date);
+                        return modelDate.day == today.day && modelDate.month == today.month;
+                      }).toList();
+                      return ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          final model = filteredModels[index];
+                          return ListTile(
+                            title: Text(model.date),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Divider(
+
+                          );
+                        },
+                        itemCount: filteredModels.length,
+                      );
+                    },
+                  )
                 ],
               ),
             ),

@@ -54,7 +54,7 @@ class _FreeHomesAllState extends State<FreeHomesAll> {
                     ),
                     const Gap(TSizes.base),
                     FilledButton(
-                      onPressed: () => context.read<GeneralBloc>().add(GeneralInitialEvent()),
+                      onPressed: () {} ,
                       child: const Text('Qayta Urinish'),
                     )
                   ],

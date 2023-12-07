@@ -1,4 +1,6 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:crm/presentations/tab_screens/homes/homes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ReportCard extends StatelessWidget {
@@ -20,20 +22,25 @@ class ReportCard extends StatelessWidget {
           ),
           color: cardColor,
           boxShadow: const [
-            BoxShadow(
-              offset: Offset(4, 6),
-            )
+            // BoxShadow(
+            //   offset: Offset(4, 6),
+            // )
           ],
           gradient: LinearGradient(
               colors: [
-                cardColor,
-                cardColor,
-                cardColor,
-                cardColor,
-                cardColor,
-                Colors.white,
+                Color(0xFFad5389),
+                Color(0xFF3c1053),
+                // cardColor,
+                // cardColor,
+                // cardColor,
+                // cardColor,
+                // cardColor,
+                // Colors.white,
 
-              ]
+              ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+
           )
       ),
       child: Column(
@@ -42,7 +49,7 @@ class ReportCard extends StatelessWidget {
         children: [
           Text(title, style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
           const Icon(Icons.account_balance_wallet, color: Colors.white,),
-          Text("$price UZS", style: context.labelLarge?.copyWith(color: Colors.white),overflow: TextOverflow.ellipsis,maxLines: 2,),
+          Text(formatMoney(double.parse(price)) , style: context.labelLarge?.copyWith(color: Colors.white),overflow: TextOverflow.ellipsis,maxLines: 2,),
         ],
       ),
     );

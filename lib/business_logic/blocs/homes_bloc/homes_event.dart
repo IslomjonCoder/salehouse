@@ -4,11 +4,11 @@ abstract class HomesEvent {}
 
 class HomesEventInitial extends HomesEvent {}
 
-class NextPageEvent extends HomesEvent {
-  int page;
-
-  NextPageEvent(this.page);
-}
+// class NextPageEvent extends HomesEvent {
+//   int page;
+//
+//   NextPageEvent(this.page);
+// }
 class SelectBlocEvent extends HomesEvent {
   int blocIndex;
 
