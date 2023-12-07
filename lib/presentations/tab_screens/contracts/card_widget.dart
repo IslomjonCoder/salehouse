@@ -1,6 +1,5 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/presentations/tab_screens/homes/homes.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ReportCard extends StatelessWidget {
@@ -26,7 +25,7 @@ class ReportCard extends StatelessWidget {
             //   offset: Offset(4, 6),
             // )
           ],
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
               colors: [
                 Color(0xFFad5389),
                 Color(0xFF3c1053),

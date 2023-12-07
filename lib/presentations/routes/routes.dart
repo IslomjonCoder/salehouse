@@ -9,7 +9,7 @@ import 'package:crm/presentations/tab_screens/free_homes/free_home_detail.dart';
 import 'package:crm/presentations/tab_screens/free_homes/free_homes.dart';
 import 'package:crm/presentations/tab_screens/free_homes/free_homes_all.dart';
 import 'package:crm/presentations/tab_screens/homes/homes.dart';
-import 'package:crm/presentations/tab_screens/payment/payment.dart';
+import 'package:crm/presentations/tab_screens/payments/payments.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/contract_model.dart';
@@ -54,7 +54,7 @@ class AppRoutes {
       // case RouteNames.companies:
       //   return MaterialPageRoute(builder: (context) => const CompaniesScreen());
       case RouteNames.contracts:
-        return MaterialPageRoute(builder: (context) => const ContractsScreen());
+        return MaterialPageRoute(builder: (context) => ContractsScreen());
       // case RouteNames.blocObjects:
       //   return MaterialPageRoute(builder: (context) => const BlocObjectsScreen());
       case RouteNames.freeHomesAll:

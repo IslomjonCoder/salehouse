@@ -1,7 +1,6 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crm/business_logic/blocs/free_homes/free_homes_bloc.dart';
-import 'package:crm/business_logic/blocs/general_bloc/general_bloc.dart';
 import 'package:crm/presentations/routes/routes.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/enums.dart';

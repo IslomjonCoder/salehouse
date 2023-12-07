@@ -9,8 +9,9 @@ class TImages {
   static const String iconHome = 'assets/images/home.png';
   static const String user = 'assets/images/user.jpg';
   static const String apartment = 'assets/images/apartment.jpg';
-  static const String appLogo = 'assets/images/app_logo.png';
+  static const String appLogo = 'assets/images/app_logo.jpg';
   static const String home = 'assets/images/home.png';
+  static const String drawerLogo = 'assets/images/drawer_logo.jpg';
 
   // -- Lottie Animations --
   static const String statistic = 'assets/images/statistic.json';

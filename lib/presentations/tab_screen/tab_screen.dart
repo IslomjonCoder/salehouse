@@ -28,7 +28,7 @@ class TabScreenState extends State<TabScreen> {
         selectedIndex: context.watch<TabCubit>().state,
         children: [
           DrawerHeader(
-            child: Image.asset(TImages.appLogo),
+            child: Image.asset(TImages.drawerLogo),
           ),
           const NavigationDrawerDestination(
             backgroundColor: TColors.tPrimaryColor,
@@ -46,11 +46,11 @@ class TabScreenState extends State<TabScreen> {
           ),
           const NavigationDrawerDestination(
             icon: Icon(CupertinoIcons.doc_plaintext),
-            label: Text("Shartnoma"),
+            label: Text("Shartnomalar"),
           ),
           const NavigationDrawerDestination(
             icon: Icon(CupertinoIcons.rectangle_fill_on_rectangle_angled_fill),
-            label: Text("To'lov"),
+            label: Text("To'lovlar"),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: TSizes.md),

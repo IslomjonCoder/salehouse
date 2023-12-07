@@ -1,9 +1,10 @@
+// contract_bloc.dart
+
 import 'package:crm/data/models/contract_model.dart';
 import 'package:crm/data/service/api_service.dart';
 import 'package:crm/utils/constants/enums.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 
 part 'contract_event.dart';
 
@@ -15,43 +16,35 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
 
   ContractBloc() : super(ContractState()) {
     on<ContractEventInitial>(_onContractEventInitial);
-    // on<NextPageEvent>(
-    //   _onNextPageEvent,
-    //   transformer: droppable(),
-    // );
-    // initialize();
+    on<SearchContractsEvent>(_onSearchContractsEvent);
   }
 
-  // initialize() async {
-  //   scrollController.addListener(() {
-  //     if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-  //       if (state.contractModel != null) {
-  //         if (state.currentPage < state.contractModel!.lastPage) {
-  //           add(NextPageEvent(state.currentPage + 1));
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
+  _onSearchContractsEvent(SearchContractsEvent event, Emitter<ContractState> emit) async {
+    try {
+      final searchResults = _searchContracts(event.query);
+      emit(
+        state.copyWith(
+          data: searchResults,
+          status: Status.success,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(
+        status: Status.failure,
+        error: e.toString(),
+      ));
+    }
+  }
 
-  // _onNextPageEvent(NextPageEvent event, Emitter<ContractState> emit) async {
-  //   emit(state.copyWith(nextPageLoading: true));
-  //   try {
-  //     final contract = await apiService.getContractByPage(event.page);
-  //     final contracts = contract.data;
-  //     emit(
-  //       state.copyWith(
-  //         contractModel: contract,
-  //         status: Status.success,
-  //         data: state.contracts..addAll(contracts),
-  //         currentPage: event.page,
-  //         nextPageLoading: false,
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     emit(state.copyWith(status: Status.failure, error: e.toString(), nextPageLoading: false));
-  //   }
-  // }
+  List<ContractUser> _searchContracts(String query) {
+    // Implement your search logic here based on the query
+    // You may filter the contracts list by name or surname
+    return state.contracts
+        .where((contract) =>
+    contract.custom.name.toLowerCase().contains(query.toLowerCase()) ||
+        contract.custom.surname.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
 
   _onContractEventInitial(ContractEventInitial event, Emitter<ContractState> emit) async {
     emit(state.copyWith(status: Status.loading));
@@ -59,9 +52,8 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
       final contract = await apiService.contracts();
       emit(
         state.copyWith(
-          // contractModel: contract,
-          status: Status.success,
           data: contract,
+          status: Status.success,
           currentPage: 1,
         ),
       );
