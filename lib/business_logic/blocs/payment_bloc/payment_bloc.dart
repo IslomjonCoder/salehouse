@@ -15,53 +15,57 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
   PaymentBloc() : super(const PaymentState()) {
     on<PaymentInitialEvent>(_onPaymentInitialEvent);
-    on<PaymentNextPageEvent>(_onPaymentNextPageEvent, transformer: droppable());
-    initialize();
+    // on<PaymentNextPageEvent>(_onPaymentNextPageEvent, transformer: droppable());
+    // initialize();
   }
 
-  initialize() async {
-    scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        if (state.paymentModel != null) {
-          if (state.currentPage < state.paymentModel!.lastPage) {
-            add(PaymentNextPageEvent(state.currentPage + 1));
-          }
-        }
-      }
-    });
-  }
+  // initialize() async {
+  //   scrollController.addListener(() {
+  //     if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+  //       if (state.paymentModel != null) {
+  //         if (state.currentPage < state.paymentModel!.lastPage) {
+  //           add(PaymentNextPageEvent(state.currentPage + 1));
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 
   _onPaymentInitialEvent(PaymentInitialEvent event, Emitter<PaymentState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
       final dailyBenefit = await apiService.payment();
-      final response = await apiService.payments(1);
-      List<Datum> data = [];
-      data.addAll(response.data);
+      final response = await apiService.payments();
+      // List<Datum> data = [];
+      // data.addAll(response.data);
 
-      emit(state.copyWith(
-          status: Status.success, paymentModel: response, dailyBenefit: dailyBenefit, data: data));
-    } catch (e) {
-      emit(state.copyWith(status: Status.failure, error: e.toString()));
-    }
-  }
-
-  _onPaymentNextPageEvent(PaymentNextPageEvent event, Emitter<PaymentState> emit) async {
-
-    emit(state.copyWith(nextPageLoading: true));
-    try {
-      final response = await apiService.payments(event.page);
-      final List paymentsRemote = response.data;
       emit(state.copyWith(
         status: Status.success,
-        paymentModel: response,
-        data: state.data..addAll(paymentsRemote as List<Datum>),
-        nextPageLoading: false,
-        currentPage: event.page,
-
+        // paymentModel: response,
+        dailyBenefit: dailyBenefit,
+        data: response,
       ));
     } catch (e) {
       emit(state.copyWith(status: Status.failure, error: e.toString()));
     }
   }
+
+// _onPaymentNextPageEvent(PaymentNextPageEvent event, Emitter<PaymentState> emit) async {
+//
+//   emit(state.copyWith(nextPageLoading: true));
+//   try {
+//     final response = await apiService.payments(event.page);
+//     final List paymentsRemote = response.data;
+//     emit(state.copyWith(
+//       status: Status.success,
+//       paymentModel: response,
+//       data: state.data..addAll(paymentsRemote as List<Datum>),
+//       nextPageLoading: false,
+//       currentPage: event.page,
+//
+//     ));
+//   } catch (e) {
+//     emit(state.copyWith(status: Status.failure, error: e.toString()));
+//   }
+// }
 }

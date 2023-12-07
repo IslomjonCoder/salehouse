@@ -133,17 +133,18 @@ class ApiService {
   }
 
 // https://ctsbackend.uz/api/boss/data/payments
-  Future<PaymentModel> payments(int page) async {
+  Future<List<Datum>> payments() async {
     try {
-      final response = await dio.get(paymentsEndpoint, queryParameters: {'page': page});
+      final response = await dio.get(paymentsEndpoint);
       if (response.statusCode == 200) {
-        return PaymentModel.fromJson(response.data['data']);
+        return List<Datum>.from(response.data['data'].map((x) => Datum.fromJson(x)));
+        // return PaymentModel.fromJson(response.data['data']);
       }
       throw 'Status code: ${response.statusCode}';
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {
         await refreshToken();
-        final response = await ApiService().payments(page);
+        final response = await ApiService().payments();
         return response;
       }
       throw errorHandler(e);
@@ -310,17 +311,20 @@ class ApiService {
     }
   }
 
-  Future<HomeModel> home({required int page, int bloc = 1}) async {
+  Future<List<HomeModelUser>> home({required int bloc }) async {
     try {
-      final response = await dio.get("$homesEndpoint/$bloc", queryParameters: {'page': page});
+      final response = await dio.get("$homesEndpoint/$bloc");
       if (response.statusCode == 200) {
-        return HomeModel.fromJson(response.data['data']);
+        return List<HomeModelUser>.from(
+          response.data['data'].map((x) => HomeModelUser.fromJson(x)),
+        );
+        // return HomeModel.fromJson(response.data['data']);
       }
       throw 'Status code: ${response.statusCode}';
     } on DioException catch (e) {
       if (e.type == DioExceptionType.badResponse) {
         await refreshToken();
-        final response = await ApiService().home(page: page, bloc: bloc);
+        final response = await ApiService().home( bloc: bloc);
         return response;
       }
       throw errorHandler(e);

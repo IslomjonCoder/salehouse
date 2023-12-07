@@ -57,37 +57,41 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 80,
+        // toolbarHeight: 80,
         elevation: 0,
         scrolledUnderElevation: 0,
-        leadingWidth: double.infinity,
-        leading: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          padding: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: TColors.tPrimaryColor,
-          ),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios_new_outlined,
-                  color: Colors.white,
-                ),
-              ),
-              const Gap(20),
-              Flexible(
-                child: Text(
-                  "${widget.contract.custom.name} ${widget.contract.custom.surname} ${widget.contract.custom.middlename}",
-                  style: context.labelMedium?.copyWith(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
+        // leadingWidth: double.infinity,
+        // leading: Container(
+        //   margin: const EdgeInsets.symmetric(horizontal: 10),
+        //   padding: const EdgeInsets.all(5.0),
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(20),
+        //     color: TColors.tPrimaryColor,
+        //   ),
+        //   child: Row(
+        //     children: [
+        //       IconButton(
+        //         onPressed: () {
+        //           Navigator.pop(context);
+        //         },
+        //         icon: const Icon(
+        //           Icons.arrow_back_ios_new_outlined,
+        //           color: Colors.white,
+        //         ),
+        //       ),
+        //       const Gap(20),
+        //       Flexible(
+        //         child: Text(
+        //           widget.contract.custom.fullName ?? '',
+        //           style: context.labelMedium?.copyWith(color: Colors.white),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        title: Text(
+          widget.contract.custom.fullName ?? '',
+          style: context.titleLarge,
         ),
       ),
       body: SingleChildScrollView(

@@ -40,9 +40,9 @@ class ContractsScreen extends StatelessWidget {
       }
 
       return Icon(
-        intStatus == 1
+        intStatus == 2
             ? CupertinoIcons.checkmark_seal_fill
-            : intStatus == 2
+            : intStatus == 1
                 ? CupertinoIcons.arrow_2_circlepath_circle_fill
                 : intStatus == 3
                     ? CupertinoIcons.xmark_seal_fill
@@ -192,7 +192,8 @@ class ContractsScreen extends StatelessWidget {
                                         context.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    "${state.contracts[index].sum} UZS",
+                                    NumberFormat.simpleCurrency(locale: 'uz',name: 'so`m',decimalDigits: 0).format(double.parse(state.contracts[index].sum)),
+                                    // "${state.contracts[index].sum} UZS",
                                     style: context.titleSmall?.copyWith(color: Colors.teal),
                                   ),
                                 ],

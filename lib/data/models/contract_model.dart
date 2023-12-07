@@ -185,6 +185,9 @@ class Custom {
   String phone;
   String? phone2;
 
+  // write getter for get fullname
+  String get fullName => "$name $surname $middlename";
+
   Custom({
     required this.id,
     required this.name,
