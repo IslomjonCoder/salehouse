@@ -90,7 +90,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
         //   ),
         // ),
         title: Text(
-          widget.contract.custom.fullName ?? '',
+          widget.contract.custom.fullName,
           style: context.titleLarge,
         ),
       ),

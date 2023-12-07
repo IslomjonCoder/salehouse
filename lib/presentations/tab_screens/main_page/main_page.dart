@@ -53,9 +53,9 @@ class _MainPageState extends State<MainPage> {
               ),
             );
           }
-          // if (state.status == Status.failure) {
-          //   return NoConnection(errorText: state.error ?? "");
-          // }
+          if (state.status == Status.failure) {
+            return NoConnection(errorText: state.error ?? "");
+          }
           return SmartRefresher(
             controller: _refreshController,
             onRefresh: () async {
@@ -89,7 +89,7 @@ class _MainPageState extends State<MainPage> {
                           children: [
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
+                                padding: const EdgeInsets.only(top: 10.0,left: 5.0,right: 5.0),
                                 child: RichText(
                                     text: TextSpan(children: [
                                       TextSpan(
@@ -109,12 +109,15 @@ class _MainPageState extends State<MainPage> {
                                         )
                                             .toString(),
                                         style: context.displaySmall
-                                            ?.copyWith(color: TColors.tPrimaryColor),
+                                            ?.copyWith(color: TColors.tPrimaryColor,fontSize: 50),
                                       ),
                                     ])),
                               ),
                             ),
                             const Text("Kunlik tushum"),
+                            // IconButton(onPressed: (){
+                            //   print(state.dailyBenefit.toDouble());
+                            // }, icon: const Icon(Icons.chevron_right)),
                             Lottie.asset(
                               TImages.statistic,
                             ),
@@ -165,7 +168,61 @@ class _MainPageState extends State<MainPage> {
                         itemBuilder: (BuildContext context, int index) {
                           final model = filteredModels[index];
                           return ListTile(
-                            title: Text(model.date),
+                            leading:  Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: AvatarImage(
+                                    backgroundColor: TColors.tPrimaryColor,
+                                    size: 80,
+                                    child: Text(
+                                      model.contract.custom.name[0].toUpperCase() +
+                                          model.contract.custom.surname[0]
+                                              .toUpperCase(),
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w900,
+                                          color: Colors.white70),
+                                    ),
+                                  ),
+                                )),
+                            title: Text(
+                              NumberFormat.simpleCurrency(locale: 'uz',name: 'so`m',decimalDigits: 0).format(double.parse(model.contract.sum)),
+                              style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+
+                              "${model.contract.custom.name} ${model.contract.custom.surname}",
+                              style: context.bodyMedium,
+                            ),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: TSizes.xs),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(TSizes.xs),
+                                    color: TColors.tPrimaryColor,
+                                  ),
+                                  child: Text(
+                                    model.types.name,
+                                    style: context.bodyLarge?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                                Text(
+                                  model.date,
+                                  style: context.bodySmall
+                                      ?.copyWith(color: Colors.grey, fontSize: 12),
+                                ),
+                              ],
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {

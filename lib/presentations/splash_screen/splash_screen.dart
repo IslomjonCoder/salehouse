@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 6),
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
@@ -48,24 +48,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FadeTransition(
-          opacity: _fadeAnimation,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(TImages.appLogo, height: 300),
-              Text(
-                "CRM ga xush kelibsiz",
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
-              // const Gap(20),
-              // CircularProgressIndicator(),
-            ],
-          ),
-        ),
-      ),
+      body: GradientBackground(fadeAnimation: _fadeAnimation),
     );
   }
 
@@ -73,5 +56,31 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+}
+
+class GradientBackground extends StatelessWidget {
+  final Animation<double> fadeAnimation;
+
+  const GradientBackground({super.key, required this.fadeAnimation});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF6b5c79),Color(0xFF6b5c79), Color(0xFFec995e),Color(0xFFec995e)],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: FadeTransition(
+          opacity: fadeAnimation,
+          child: Image.asset(TImages.appLogo, height: MediaQuery.of(context).size.height),
+        ),
+      ),
+    );
   }
 }
