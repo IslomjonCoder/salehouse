@@ -29,13 +29,6 @@ class ReportCard extends StatelessWidget {
               colors: [
                 Color(0xFFad5389),
                 Color(0xFF3c1053),
-                // cardColor,
-                // cardColor,
-                // cardColor,
-                // cardColor,
-                // cardColor,
-                // Colors.white,
-
               ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

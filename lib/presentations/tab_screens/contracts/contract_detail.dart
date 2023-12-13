@@ -34,20 +34,25 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
       ),
       ReportCardDataModel(
         title: "Boshlang'ich to'lov",
-        price: widget.contract.price.toString(),
-        cardColor: Colors.green,
+        price: widget.contract.startPrice.toString(),
+        cardColor: TColors.tPrimaryColor,
       ),
       ReportCardDataModel(
         title: ''
             "1m² uchun to'lov",
         price: widget.contract.square.toString(),
-        cardColor: Colors.orange,
+        cardColor: TColors.tPrimaryColor,
       ),
       ReportCardDataModel(
         title: "Qolgan to'lov",
         price: widget.contract.left.toString(),
-        cardColor: Colors.red,
+        cardColor: TColors.tPrimaryColor,
       ),
+      // ReportCardDataModel(
+      //   title: "Qilingan to'lovlar",
+      //   price: widget.contract.price.toString(),
+      //   cardColor: TColors.tPrimaryColor,
+      // ),
     ];
 
   }

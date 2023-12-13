@@ -156,13 +156,12 @@ class _MainPageState extends State<MainPage> {
                   BlocBuilder<PaymentBloc, PaymentState>(
                     builder: (context, state) {
                       final models = state.data;
-                      // filter model date with current date and show only today
                       final today = DateTime.now();
                       final filteredModels = models.where((model) {
                         final modelDate = DateTime.parse(model.date);
-                        return modelDate.day == today.day && modelDate.month == today.month;
+                        return modelDate.day == today.day && modelDate.month == today.month && modelDate.year == today.year;
                       }).toList();
-                      return ListView.separated(
+                      return filteredModels.isEmpty ? Center(child: Lottie.asset(TImages.main)) : ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {

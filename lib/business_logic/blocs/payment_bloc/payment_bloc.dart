@@ -14,6 +14,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
   PaymentBloc() : super(const PaymentState()) {
     on<PaymentInitialEvent>(_onPaymentInitialEvent);
+    on<FilterPaymentsByDateEvent>(_onFilterPaymentsByDateEvent);
     // on<PaymentNextPageEvent>(_onPaymentNextPageEvent, transformer: droppable());
     // initialize();
   }
@@ -48,6 +49,25 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       emit(state.copyWith(status: Status.failure, error: e.toString()));
     }
   }
+
+  _onFilterPaymentsByDateEvent(FilterPaymentsByDateEvent event, Emitter<PaymentState> emit) async {
+    emit(state.copyWith(status: Status.loading));
+    try {
+      final response = await apiService.payments();
+      final List<Datum> filteredData = response.where((payment) {
+        final paymentDate = DateTime.parse(payment.date);
+        return paymentDate.isAtSameMomentAs(event.selectedDate);
+      }).toList();
+
+      emit(state.copyWith(
+        status: Status.success,
+        data: filteredData,
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: Status.failure, error: e.toString()));
+    }
+  }
+
 
 // _onPaymentNextPageEvent(PaymentNextPageEvent event, Emitter<PaymentState> emit) async {
 //
