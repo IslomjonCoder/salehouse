@@ -38,7 +38,6 @@ class App extends StatelessWidget {
         // BlocProvider<SearchBloc>(create: (context) => SearchBloc()..add(SearchValueChanged(''))),
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => HomesBloc()..add(HomesEventInitial())),
-
         BlocProvider(create: (context) => PaymentBloc()..add(PaymentInitialEvent())),
         BlocProvider(create: (context) => FreeHomesBloc()..add(GetFreeHomesEvent())),
         BlocProvider(create: (context) => GeneralBloc()..add(GeneralInitialEvent())),
