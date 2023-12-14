@@ -10,6 +10,7 @@ import 'package:crm/presentations/tab_screens/free_homes/free_homes.dart';
 import 'package:crm/presentations/tab_screens/free_homes/free_homes_all.dart';
 import 'package:crm/presentations/tab_screens/homes/homes.dart';
 import 'package:crm/presentations/tab_screens/payments/payments.dart';
+import 'package:crm/utils/theme/custom_themes/payment_graphic.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/contract_model.dart';
@@ -29,6 +30,8 @@ class RouteNames {
   static const String freeHomesAll = '/freeHomesAll';
   static const String freeHomeDetail = '/freeHomeDetail';
   static const String imagePreview = '/imagePreview';
+  static const String paymentGraphic = '/paymentGraphic';
+
 }
 
 class AppRoutes {
@@ -67,6 +70,8 @@ class AppRoutes {
         return MaterialPageRoute(
             builder: (context) =>
                 ContractDetailScreen(contract: settings.arguments as ContractUser));
+      case RouteNames.paymentGraphic:
+        return MaterialPageRoute(builder: (context) =>  PaymentGraphic(data: settings.arguments as List<ListElement>,));
     }
     return MaterialPageRoute(
       builder: (context) => const Scaffold(

@@ -19,10 +19,10 @@ class ContractState {
 
   ContractState copyWith({
     Status? status,
-    ContractModel? contractModel,
+    // ContractModel? contractModel,
     List<ContractUser>? data,
-    int? currentPage,
-    bool? nextPageLoading,
+    // int? currentPage,
+    // bool? nextPageLoading,
     String? error,
 
   }) {

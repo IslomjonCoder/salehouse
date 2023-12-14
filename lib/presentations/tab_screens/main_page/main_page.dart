@@ -67,8 +67,10 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   const Gap(10),
                   Stack(
+                    alignment: Alignment.center,
                     children: [
                       Container(
+                        alignment: Alignment.center,
                         margin: const EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -86,6 +88,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Center(
                               child: Padding(
@@ -93,6 +96,7 @@ class _MainPageState extends State<MainPage> {
                                 child: RichText(
                                     text: TextSpan(children: [
                                       TextSpan(
+
                                         text: hideCost
                                             ? '------'
                                             : NumberFormat.simpleCurrency(
@@ -109,9 +113,12 @@ class _MainPageState extends State<MainPage> {
                                         )
                                             .toString(),
                                         style: context.displaySmall
-                                            ?.copyWith(color: TColors.tPrimaryColor,fontSize: 50),
+                                            ?.copyWith(color: TColors.tPrimaryColor,fontSize: 32*context.mqDevicePixelRatio),
+
+
                                       ),
-                                    ])),
+
+                                    ]),textAlign: TextAlign.center,),
                               ),
                             ),
                             const Text("Kunlik tushum"),
