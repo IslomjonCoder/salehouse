@@ -41,8 +41,8 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
     // You may filter the contracts list by name or surname
     return state.contracts
         .where((contract) =>
-    contract.custom.name.toLowerCase().contains(query.toLowerCase()) ||
-        contract.custom.surname.toLowerCase().contains(query.toLowerCase()))
+            contract.custom.name.toLowerCase().contains(query.toLowerCase()) ||
+            contract.custom.surname.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
 
@@ -54,7 +54,7 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
         state.copyWith(
           data: contract,
           status: Status.success,
-          currentPage: 1,
+          // currentPage: 1,
         ),
       );
     } catch (e) {

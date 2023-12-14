@@ -4,73 +4,73 @@
 
 import 'dart:convert';
 
-ContractModel contractModelFromJson(String str) => ContractModel.fromJson(json.decode(str));
+// ContractModel contractModelFromJson(String str) => ContractModel.fromJson(json.decode(str));
+//
+// String contractModelToJson(ContractModel data) => json.encode(data.toJson());
 
-String contractModelToJson(ContractModel data) => json.encode(data.toJson());
-
-class ContractModel {
-  int currentPage;
-  List<ContractUser> data;
-  String firstPageUrl;
-  int from;
-  int lastPage;
-  String lastPageUrl;
-  List<Link> links;
-  dynamic nextPageUrl;
-  String path;
-  int perPage;
-  dynamic prevPageUrl;
-  int to;
-  int total;
-
-  ContractModel({
-    required this.currentPage,
-    required this.data,
-    required this.firstPageUrl,
-    required this.from,
-    required this.lastPage,
-    required this.lastPageUrl,
-    required this.links,
-    required this.nextPageUrl,
-    required this.path,
-    required this.perPage,
-    required this.prevPageUrl,
-    required this.to,
-    required this.total,
-  });
-
-  factory ContractModel.fromJson(Map<String, dynamic> json) => ContractModel(
-    currentPage: json["current_page"],
-    data: List<ContractUser>.from(json["data"].map((x) => ContractUser.fromJson(x))),
-    firstPageUrl: json["first_page_url"],
-    from: json["from"],
-    lastPage: json["last_page"],
-    lastPageUrl: json["last_page_url"],
-    links: List<Link>.from(json["links"].map((x) => Link.fromJson(x))),
-    nextPageUrl: json["next_page_url"],
-    path: json["path"],
-    perPage: json["per_page"],
-    prevPageUrl: json["prev_page_url"],
-    to: json["to"],
-    total: json["total"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "current_page": currentPage,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "first_page_url": firstPageUrl,
-    "from": from,
-    "last_page": lastPage,
-    "last_page_url": lastPageUrl,
-    "links": List<dynamic>.from(links.map((x) => x.toJson())),
-    "next_page_url": nextPageUrl,
-    "path": path,
-    "per_page": perPage,
-    "prev_page_url": prevPageUrl,
-    "to": to,
-    "total": total,
-  };
-}
+// class ContractModel {
+//   int currentPage;
+//   List<ContractUser> data;
+//   String firstPageUrl;
+//   int from;
+//   int lastPage;
+//   String lastPageUrl;
+//   List<Link> links;
+//   dynamic nextPageUrl;
+//   String path;
+//   int perPage;
+//   dynamic prevPageUrl;
+//   int to;
+//   int total;
+//
+//   ContractModel({
+//     required this.currentPage,
+//     required this.data,
+//     required this.firstPageUrl,
+//     required this.from,
+//     required this.lastPage,
+//     required this.lastPageUrl,
+//     required this.links,
+//     required this.nextPageUrl,
+//     required this.path,
+//     required this.perPage,
+//     required this.prevPageUrl,
+//     required this.to,
+//     required this.total,
+//   });
+//
+//   factory ContractModel.fromJson(Map<String, dynamic> json) => ContractModel(
+//     currentPage: json["current_page"],
+//     data: List<ContractUser>.from(json["data"].map((x) => ContractUser.fromJson(x))),
+//     firstPageUrl: json["first_page_url"],
+//     from: json["from"],
+//     lastPage: json["last_page"],
+//     lastPageUrl: json["last_page_url"],
+//     links: List<Link>.from(json["links"].map((x) => Link.fromJson(x))),
+//     nextPageUrl: json["next_page_url"],
+//     path: json["path"],
+//     perPage: json["per_page"],
+//     prevPageUrl: json["prev_page_url"],
+//     to: json["to"],
+//     total: json["total"],
+//   );
+//
+//   Map<String, dynamic> toJson() => {
+//     "current_page": currentPage,
+//     "data": List<dynamic>.from(data.map((x) => x.toJson())),
+//     "first_page_url": firstPageUrl,
+//     "from": from,
+//     "last_page": lastPage,
+//     "last_page_url": lastPageUrl,
+//     "links": List<dynamic>.from(links.map((x) => x.toJson())),
+//     "next_page_url": nextPageUrl,
+//     "path": path,
+//     "per_page": perPage,
+//     "prev_page_url": prevPageUrl,
+//     "to": to,
+//     "total": total,
+//   };
+// }
 
 class ContractUser {
   int id;
@@ -96,6 +96,9 @@ class ContractUser {
   Custom custom;
   Detail detail;
   Staff staff;
+  List<Payment> payments;
+  List<ListElement> list;
+
 
   ContractUser({
     required this.id,
@@ -121,6 +124,8 @@ class ContractUser {
     required this.custom,
     required this.detail,
     required this.staff,
+    required this.payments,
+    required this.list,
   });
 
   factory ContractUser.fromJson(Map<String, dynamic> json) => ContractUser(
@@ -147,33 +152,37 @@ class ContractUser {
     custom: Custom.fromJson(json["custom"]),
     detail: Detail.fromJson(json["detail"]),
     staff: Staff.fromJson(json["staff"]),
+    payments: List<Payment>.from(json["payments"].map((x) => Payment.fromJson(x))),
+    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x))),
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "user_id": userId,
-    "home_id": homeId,
-    "client_id": clientId,
-    "client_type": clientType,
-    "square": square,
-    "price": price,
-    "sum": sum,
-    "left": left,
-    "discount": discount,
-    "start_price": startPrice,
-    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-    "comment": comment,
-    "status": status,
-    "isrepaired": isrepaired,
-    "peniya": peniya,
-    "isvalute": isvalute,
-    "valute": valute,
-    "homes": homes.toJson(),
-    "custom": custom.toJson(),
-    "detail": detail.toJson(),
-    "staff": staff.toJson(),
-  };
+  // Map<String, dynamic> toJson() => {
+  //   "id": id,
+  //   "name": name,
+  //   "user_id": userId,
+  //   "home_id": homeId,
+  //   "client_id": clientId,
+  //   "client_type": clientType,
+  //   "square": square,
+  //   "price": price,
+  //   "sum": sum,
+  //   "left": left,
+  //   "discount": discount,
+  //   "start_price": startPrice,
+  //   "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+  //   "comment": comment,
+  //   "status": status,
+  //   "isrepaired": isrepaired,
+  //   "peniya": peniya,
+  //   "isvalute": isvalute,
+  //   "valute": valute,
+  //   "homes": homes.toJson(),
+  //   "custom": custom.toJson(),
+  //   "detail": detail.toJson(),
+  //   "staff": staff.toJson(),
+  //   "payments": List<dynamic>.from(payments.map((x) => x.toJson())),
+  //   "list": List<dynamic>.from(list.map((x) => x.toJson())),
+  // };
 }
 
 class Custom {
@@ -275,24 +284,24 @@ class Detail {
     contractId: json["contract_id"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "passport_series": passportSeries,
-    "issue": "${issue.year.toString().padLeft(4, '0')}-${issue.month.toString().padLeft(2, '0')}-${issue.day.toString().padLeft(2, '0')}",
-    "authority": authority,
-    "birthday": "${birthday.year.toString().padLeft(4, '0')}-${birthday.month.toString().padLeft(2, '0')}-${birthday.day.toString().padLeft(2, '0')}",
-    "region_id": regionId,
-    "city": city,
-    "home": home,
-    "work_place": workPlace,
-    "image": image,
-    "inn": inn,
-    "mfo": mfo,
-    "oked": oked,
-    "account_number": accountNumber,
-    "bank_name": bankName,
-    "contract_id": contractId,
-  };
+  // Map<String, dynamic> toJson() => {
+  //   "id": id,
+  //   "passport_series": passportSeries,
+  //   "issue": "${issue.year.toString().padLeft(4, '0')}-${issue.month.toString().padLeft(2, '0')}-${issue.day.toString().padLeft(2, '0')}",
+  //   "authority": authority,
+  //   "birthday": "${birthday.year.toString().padLeft(4, '0')}-${birthday.month.toString().padLeft(2, '0')}-${birthday.day.toString().padLeft(2, '0')}",
+  //   "region_id": regionId,
+  //   "city": city,
+  //   "home": home,
+  //   "work_place": workPlace,
+  //   "image": image,
+  //   "inn": inn,
+  //   "mfo": mfo,
+  //   "oked": oked,
+  //   "account_number": accountNumber,
+  //   "bank_name": bankName,
+  //   "contract_id": contractId,
+  // };
 }
 
 class Homes {
@@ -348,23 +357,23 @@ class Homes {
     isvalute: json["isvalute"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "block_id": blockId,
-    "number": number,
-    "stage": stage,
-    "rooms": rooms,
-    "square": square,
-    "repaired": repaired,
-    "norepaired": norepaired,
-    "start": start,
-    "isrepaired": isrepaired,
-    "islive": islive,
-    "status": status,
-    "image": image,
-    "plan_id": planId,
-    "isvalute": isvalute,
-  };
+  // Map<String, dynamic> toJson() => {
+  //   "id": id,
+  //   "block_id": blockId,
+  //   "number": number,
+  //   "stage": stage,
+  //   "rooms": rooms,
+  //   "square": square,
+  //   "repaired": repaired,
+  //   "norepaired": norepaired,
+  //   "start": start,
+  //   "isrepaired": isrepaired,
+  //   "islive": islive,
+  //   "status": status,
+  //   "image": image,
+  //   "plan_id": planId,
+  //   "isvalute": isvalute,
+  // };
 }
 
 class Staff {
@@ -399,38 +408,122 @@ class Staff {
     updatedAt: json["updated_at"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "login": login,
-    "password": password,
-    "role": role,
-    "status": status,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-  };
+  // Map<String, dynamic> toJson() => {
+  //   "id": id,
+  //   "name": name,
+  //   "login": login,
+  //   "password": password,
+  //   "role": role,
+  //   "status": status,
+  //   "created_at": createdAt,
+  //   "updated_at": updatedAt,
+  // };
 }
 
-class Link {
-  String? url;
-  String label;
-  bool active;
+// class Link {
+//   String? url;
+//   String label;
+//   bool active;
+//
+//   Link({
+//     required this.url,
+//     required this.label,
+//     required this.active,
+//   });
+//
+//   factory Link.fromJson(Map<String, dynamic> json) => Link(
+//     url: json["url"],
+//     label: json["label"],
+//     active: json["active"],
+//   );
+//
+//   Map<String, dynamic> toJson() => {
+//     "url": url,
+//     "label": label,
+//     "active": active,
+//   };
+// }
 
-  Link({
-    required this.url,
-    required this.label,
-    required this.active,
+class ListElement {
+  int id;
+  DateTime paymentDate;
+  String contractId;
+  String sum;
+  String listDefault;
+  String status;
+  String left;
+
+  ListElement({
+    required this.id,
+    required this.paymentDate,
+    required this.contractId,
+    required this.sum,
+    required this.listDefault,
+    required this.status,
+    required this.left,
   });
 
-  factory Link.fromJson(Map<String, dynamic> json) => Link(
-    url: json["url"],
-    label: json["label"],
-    active: json["active"],
+  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
+    id: json["id"],
+    paymentDate: DateTime.parse(json["payment_date"]),
+    contractId: json["contract_id"],
+    sum: json["sum"],
+    listDefault: json["default"],
+    status: json["status"],
+    left: json["left"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "url": url,
-    "label": label,
-    "active": active,
-  };
+  // Map<String, dynamic> toJson() => {
+  //   "id": id,
+  //   "payment_date": "${paymentDate.year.toString().padLeft(4, '0')}-${paymentDate.month.toString().padLeft(2, '0')}-${paymentDate.day.toString().padLeft(2, '0')}",
+  //   "contract_id": contractId,
+  //   "sum": sum,
+  //   "default": listDefault,
+  //   "status": status,
+  //   "left": left,
+  // };
+}
+
+class Payment {
+  int id;
+  String contractId;
+  String userId;
+  DateTime date;
+  String sum;
+  String typeId;
+  String isvalute;
+  String valute;
+
+  Payment({
+    required this.id,
+    required this.contractId,
+    required this.userId,
+    required this.date,
+    required this.sum,
+    required this.typeId,
+    required this.isvalute,
+    required this.valute,
+  });
+
+  factory Payment.fromJson(Map<String, dynamic> json) => Payment(
+    id: json["id"],
+    contractId: json["contract_id"],
+    userId: json["user_id"],
+    date: DateTime.parse(json["date"]),
+    sum: json["sum"],
+    typeId: json["type_id"],
+    isvalute: json["isvalute"],
+    valute: json["valute"],
+  );
+
+  // Map<String, dynamic> toJson() => {
+  //   "id": id,
+  //   "contract_id": contractId,
+  //   "user_id": userId,
+  //   "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+  //   "sum": sum,
+  //   "type_id": typeId,
+  //   "isvalute": isvalute,
+  //   "valute": valute,
+  // };
 }

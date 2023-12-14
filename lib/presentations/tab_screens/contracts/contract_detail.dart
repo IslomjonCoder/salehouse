@@ -1,5 +1,6 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/data/models/contract_model.dart';
+import 'package:crm/presentations/routes/routes.dart';
 import 'package:crm/presentations/tab_screens/contracts/card_widget.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,7 +16,6 @@ class ContractDetailScreen extends StatefulWidget {
   State<ContractDetailScreen> createState() => _ContractDetailScreenState();
 }
 
-
 class _ContractDetailScreenState extends State<ContractDetailScreen> {
   String formatDate(DateTime date) {
     return DateFormat('yyyy/MM/dd').format(date);
@@ -29,7 +29,8 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
     reportCardData = [
       ReportCardDataModel(
         title: 'Jami to\'lov',
-        price: (double.parse(widget.contract.sum) - double.parse(widget.contract.discount)).toString(),
+        price:
+            (double.parse(widget.contract.sum) - double.parse(widget.contract.discount)).toString(),
         cardColor: TColors.tPrimaryColor,
       ),
       ReportCardDataModel(
@@ -54,51 +55,14 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
       //   cardColor: TColors.tPrimaryColor,
       // ),
     ];
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        // toolbarHeight: 80,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        // leadingWidth: double.infinity,
-        // leading: Container(
-        //   margin: const EdgeInsets.symmetric(horizontal: 10),
-        //   padding: const EdgeInsets.all(5.0),
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(20),
-        //     color: TColors.tPrimaryColor,
-        //   ),
-        //   child: Row(
-        //     children: [
-        //       IconButton(
-        //         onPressed: () {
-        //           Navigator.pop(context);
-        //         },
-        //         icon: const Icon(
-        //           Icons.arrow_back_ios_new_outlined,
-        //           color: Colors.white,
-        //         ),
-        //       ),
-        //       const Gap(20),
-        //       Flexible(
-        //         child: Text(
-        //           widget.contract.custom.fullName ?? '',
-        //           style: context.labelMedium?.copyWith(color: Colors.white),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        title: Text(
-          widget.contract.custom.fullName,
-          style: context.titleLarge,
-        ),
-      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {context.pushNamed(RouteNames.paymentGraphic,arguments: widget.contract.list);}, enableFeedback: true, child: const Icon(Icons.list)),
+      appBar: AppBar(title: Text(widget.contract.custom.fullName)),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -131,8 +95,10 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 border: TableBorder.all(),
                 children: [
-                  buildTableRow("Passport berilgan sana", formatDate(widget.contract.detail.issue).toString()),
-                  buildTableRow("Tug'ulgan sanasi", formatDate(widget.contract.detail.birthday).toString()),
+                  buildTableRow("Passport berilgan sana",
+                      formatDate(widget.contract.detail.issue).toString()),
+                  buildTableRow(
+                      "Tug'ulgan sanasi", formatDate(widget.contract.detail.birthday).toString()),
                   buildTableRow("Passport seriyasi", widget.contract.detail.passportSeries),
                   buildTableRow("\nViloyat\n", widget.contract.detail.authority),
                   buildTableRow(

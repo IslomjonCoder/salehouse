@@ -47,10 +47,10 @@ class ContractsScreen extends StatelessWidget {
         intStatus == 2
             ? CupertinoIcons.checkmark_seal_fill
             : intStatus == 1
-            ? CupertinoIcons.arrow_2_circlepath_circle_fill
-            : intStatus == 3
-            ? CupertinoIcons.xmark_seal_fill
-            : CupertinoIcons.circle,
+                ? CupertinoIcons.arrow_2_circlepath_circle_fill
+                : intStatus == 3
+                    ? CupertinoIcons.xmark_seal_fill
+                    : CupertinoIcons.circle,
         color: iconColor,
       );
     } catch (e) {
@@ -98,7 +98,7 @@ class ContractsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextFormField(
-              onTapOutside: (e){
+              onTapOutside: (e) {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               controller: searchController,
@@ -106,22 +106,21 @@ class ContractsScreen extends StatelessWidget {
                 context.read<ContractBloc>().add(SearchContractsEvent(query: value));
               },
               decoration: InputDecoration(
-                hintText: 'Qidirish',
-                prefixIcon: const Icon(CupertinoIcons.search),
-                suffixIcon:  IconButton(
-                  onPressed: () {
-                    searchController.clear();
-                    context.read<ContractBloc>().add(ContractEventInitial());
-                  },
-                  icon: const Icon(Icons.clear),
-                )
-              ),
+                  hintText: 'Qidirish',
+                  prefixIcon: const Icon(CupertinoIcons.search),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      searchController.clear();
+                      context.read<ContractBloc>().add(ContractEventInitial());
+                    },
+                    icon: const Icon(Icons.clear),
+                  )),
             ),
           ),
           Expanded(
             child: BlocBuilder<ContractBloc, ContractState>(
               buildWhen: (previous, current) =>
-              current.status.isSuccess || current.status.isFailure || current.status.isLoading,
+                  current.status.isSuccess || current.status.isFailure || current.status.isLoading,
               builder: (context, state) {
                 if (state.status.isLoading) {
                   return Center(
@@ -182,7 +181,8 @@ class ContractsScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Divider(
-                                      color: _getDividerColor(state.contracts[index].status.toString()),
+                                      color: _getDividerColor(
+                                          state.contracts[index].status.toString()),
                                       thickness: 5,
                                     ),
                                     Row(
@@ -202,8 +202,8 @@ class ContractsScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           "Maydoni:   ",
-                                          style:
-                                          context.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                                          style: context.titleSmall
+                                              ?.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           "${state.contracts[index].square} m2",
@@ -215,11 +215,12 @@ class ContractsScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           "Umumiy summasi: ",
-                                          style:
-                                          context.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                                          style: context.titleSmall
+                                              ?.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          NumberFormat.simpleCurrency(locale: 'uz', name: 'so`m', decimalDigits: 0)
+                                          NumberFormat.simpleCurrency(
+                                                  locale: 'uz', name: 'so`m', decimalDigits: 0)
                                               .format(double.parse(state.contracts[index].sum)),
                                           style: context.titleSmall?.copyWith(color: Colors.teal),
                                         ),
@@ -229,8 +230,8 @@ class ContractsScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           "Sana: ",
-                                          style:
-                                          context.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                                          style: context.titleSmall
+                                              ?.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           _getDateFromDateTimeString(
@@ -244,8 +245,8 @@ class ContractsScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           "Mas'ul: ",
-                                          style:
-                                          context.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                                          style: context.titleSmall
+                                              ?.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           state.contracts[index].staff.name,
