@@ -41,7 +41,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
       ReportCardDataModel(
         title: ''
             "1m² uchun to'lov",
-        price: widget.contract.square.toString(),
+        price: widget.contract.price.toString(),
         cardColor: TColors.tPrimaryColor,
       ),
       ReportCardDataModel(

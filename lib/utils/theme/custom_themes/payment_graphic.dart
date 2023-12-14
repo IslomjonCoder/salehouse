@@ -15,13 +15,10 @@ class PaymentGraphic extends StatelessWidget {
         child: PaginatedDataTable(
           header: const Text('To`lov grafik'),
           columns: const [
-            DataColumn(label: Text('ID')),
-            DataColumn(label: Text('Payment Date')),
-            DataColumn(label: Text('Contract ID')),
-            DataColumn(label: Text('Sum')),
-            DataColumn(label: Text('List Default')),
-            DataColumn(label: Text('Status')),
-            DataColumn(label: Text('Left')),
+            DataColumn(label: Text('Sana')),
+            DataColumn(label: Text('Summasi')),
+            // DataColumn(label: Text("Qoldiq")),
+            DataColumn(label: Text("Status")),
           ],
           source: _MyDataTableSource(data),
         ),
@@ -29,6 +26,7 @@ class PaymentGraphic extends StatelessWidget {
     );
   }
 }
+
 final dateFormat = DateFormat('yyyy/MM/dd');
 final moneyFormat = NumberFormat.simpleCurrency(locale: 'uz_UZ',decimalDigits: 0);
 class _MyDataTableSource extends DataTableSource {
@@ -44,13 +42,10 @@ class _MyDataTableSource extends DataTableSource {
     final ListElement element = data[index];
 
     return DataRow(cells: [
-      DataCell(Text(element.id.toString())),
       DataCell(Text(dateFormat.format(element.paymentDate))),
-      DataCell(Text(element.contractId)),
       DataCell(Text(moneyFormat.format(double.parse(element.sum)))),
+      // DataCell(Text(moneyFormat.format(double.parse(element.left)))),
       DataCell(Text(element.listDefault)),
-      DataCell(Text(element.status)),
-      DataCell(Text(moneyFormat.format(double.parse(element.left)))),
     ]);
   }
 

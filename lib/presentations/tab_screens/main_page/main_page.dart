@@ -197,7 +197,7 @@ class _MainPageState extends State<MainPage> {
                                   title: Text(
                                     NumberFormat.simpleCurrency(
                                             locale: 'uz', name: 'so`m', decimalDigits: 0)
-                                        .format(double.parse(model.contract.sum)),
+                                        .format(double.parse(model.sum)),
                                     style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                                   ),
                                   subtitle: Text(
