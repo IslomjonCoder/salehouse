@@ -14,6 +14,7 @@ class TAppTheme {
     disabledColor: const Color(0xFfbb8cd3),
     hoverColor: const Color(0xFF7e1bb4),
     focusColor: const Color(0xFF360052),
+  scaffoldBackgroundColor: Colors.white,
   floatingActionButtonTheme: TFloatActionButtonTheme.lightTheme,
     // create custom theme
     cardTheme: TCardTheme.cardTheme,
