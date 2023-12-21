@@ -13,15 +13,16 @@ class PaymentGraphic extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: PaginatedDataTable(
+
           header: const Text('To`lov grafik'),
           columns: const [
             DataColumn(label: Text('ID')),
-            DataColumn(label: Text('Payment Date')),
+            DataColumn(label: Text('To`lov sanasi')),
             DataColumn(label: Text('Contract ID')),
-            DataColumn(label: Text('Sum')),
-            DataColumn(label: Text('List Default')),
-            DataColumn(label: Text('Status')),
-            DataColumn(label: Text('Left')),
+            DataColumn(label: Text('To`lov summasi')),
+            DataColumn(label: Text('To`lov turi')),
+            DataColumn(label: Text('To`lov holati')),
+            DataColumn(label: Text('Qoldiq')),
           ],
           source: _MyDataTableSource(data),
         ),
