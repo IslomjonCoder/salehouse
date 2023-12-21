@@ -1,4 +1,5 @@
 class CacheManager {
+
   final Map<String, dynamic> _cache = {};
 
   /// Get data from the cache using a specific [key].

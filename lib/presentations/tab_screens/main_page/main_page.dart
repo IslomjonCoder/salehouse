@@ -37,30 +37,30 @@ class _MainPageState extends State<MainPage> {
             icon: const Icon(Icons.menu)),
         title: const Text('Bosh Sahifa'),
       ),
-      body: BlocBuilder<PaymentBloc, PaymentState>(
-        // listenWhen: (previous, current) {},
-        bloc: BlocProvider.of<PaymentBloc>(context),
-        buildWhen: (previous, current) =>
-            current.status.isSuccess || current.status.isLoading || current.status.isFailure,
-        builder: (context, state) {
-          if (state.status == Status.loading) {
-            return Center(
-              child: LoadingAnimationWidget.staggeredDotsWave(
-                color: TColors.tPrimaryColor,
-                size: TSizes.imageXs,
-              ),
-            );
-          }
-          if (state.status == Status.failure) {
-            return NoConnection(errorText: state.error ?? "");
-          }
-          return SmartRefresher(
-            controller: _refreshController,
-            onRefresh: () async {
-              context.read<PaymentBloc>().add(PaymentInitialEvent());
-              _refreshController.refreshCompleted();
-            },
-            child: SingleChildScrollView(
+      body: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: () async {
+          context.read<PaymentBloc>().add(PaymentInitialEvent());
+          _refreshController.refreshCompleted();
+        },
+        child: BlocBuilder<PaymentBloc, PaymentState>(
+          // listenWhen: (previous, current) {},
+          bloc: BlocProvider.of<PaymentBloc>(context),
+          buildWhen: (previous, current) =>
+              current.status.isSuccess || current.status.isLoading || current.status.isFailure,
+          builder: (context, state) {
+            if (state.status == Status.loading) {
+              return Center(
+                child: LoadingAnimationWidget.staggeredDotsWave(
+                  color: TColors.tPrimaryColor,
+                  size: TSizes.imageXs,
+                ),
+              );
+            }
+            if (state.status == Status.failure) {
+              return NoConnection(errorText: state.error ?? "");
+            }
+            return SingleChildScrollView(
               child: Column(
                 children: [
                   const Gap(10),
@@ -197,7 +197,7 @@ class _MainPageState extends State<MainPage> {
                                   title: Text(
                                     NumberFormat.simpleCurrency(
                                             locale: 'uz', name: 'so`m', decimalDigits: 0)
-                                        .format(double.parse(model.contract.sum)),
+                                        .format(double.parse(model.sum)),
                                     style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                                   ),
                                   subtitle: Text(
@@ -240,9 +240,9 @@ class _MainPageState extends State<MainPage> {
                   )
                 ],
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
