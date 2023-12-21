@@ -28,9 +28,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
@@ -39,30 +37,30 @@ class _MainPageState extends State<MainPage> {
             icon: const Icon(Icons.menu)),
         title: const Text('Bosh Sahifa'),
       ),
-      body: BlocBuilder<PaymentBloc, PaymentState>(
-        // listenWhen: (previous, current) {},
-        bloc: BlocProvider.of<PaymentBloc>(context),
-        buildWhen: (previous, current) =>
-        current.status.isSuccess || current.status.isLoading || current.status.isFailure,
-        builder: (context, state) {
-          if (state.status == Status.loading) {
-            return Center(
-              child: LoadingAnimationWidget.staggeredDotsWave(
-                color: TColors.tPrimaryColor,
-                size: TSizes.imageXs,
-              ),
-            );
-          }
-          if (state.status == Status.failure) {
-            return NoConnection(errorText: state.error ?? "");
-          }
-          return SmartRefresher(
-            controller: _refreshController,
-            onRefresh: () async {
-              context.read<PaymentBloc>().add(PaymentInitialEvent());
-              _refreshController.refreshCompleted();
-            },
-            child: SingleChildScrollView(
+      body: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: () async {
+          context.read<PaymentBloc>().add(PaymentInitialEvent());
+          _refreshController.refreshCompleted();
+        },
+        child: BlocBuilder<PaymentBloc, PaymentState>(
+          // listenWhen: (previous, current) {},
+          bloc: BlocProvider.of<PaymentBloc>(context),
+          buildWhen: (previous, current) =>
+              current.status.isSuccess || current.status.isLoading || current.status.isFailure,
+          builder: (context, state) {
+            if (state.status == Status.loading) {
+              return Center(
+                child: LoadingAnimationWidget.staggeredDotsWave(
+                  color: TColors.tPrimaryColor,
+                  size: TSizes.imageXs,
+                ),
+              );
+            }
+            if (state.status == Status.failure) {
+              return NoConnection(errorText: state.error ?? "");
+            }
+            return SingleChildScrollView(
               child: Column(
                 children: [
                   const Gap(10),
@@ -83,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                           image: const DecorationImage(
                             image: AssetImage(TImages.cardBack),
                             colorFilter:
-                            ColorFilter.mode(TColors.tPrimaryColor, BlendMode.softLight),
+                                ColorFilter.mode(TColors.tPrimaryColor, BlendMode.softLight),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -92,33 +90,31 @@ class _MainPageState extends State<MainPage> {
                           children: [
                             Center(
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 10.0,left: 5.0,right: 5.0),
+                                padding: const EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
                                 child: RichText(
-                                    text: TextSpan(children: [
-                                      TextSpan(
-
-                                        text: hideCost
-                                            ? '------'
-                                            : NumberFormat.simpleCurrency(
-                                          locale: 'uz_UZ',
-                                          name: 'UZS',
-                                          decimalDigits: 0,
-                                        )
-                                            .format(
-                                          context
-                                              .read<PaymentBloc>()
-                                              .state
-                                              .dailyBenefit
-                                              .toDouble(),
-                                        )
-                                            .toString(),
-                                        style: context.displaySmall
-                                            ?.copyWith(color: TColors.tPrimaryColor,fontSize: 32*context.mqDevicePixelRatio),
-
-
-                                      ),
-
-                                    ]),textAlign: TextAlign.center,),
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                      text: hideCost
+                                          ? '------'
+                                          : NumberFormat.simpleCurrency(
+                                              locale: 'uz_UZ',
+                                              name: 'UZS',
+                                              decimalDigits: 0,
+                                            )
+                                              .format(
+                                                context
+                                                    .read<PaymentBloc>()
+                                                    .state
+                                                    .dailyBenefit
+                                                    .toDouble(),
+                                              )
+                                              .toString(),
+                                      style: context.displaySmall
+                                          ?.copyWith(color: TColors.tPrimaryColor, fontSize: 32),
+                                    ),
+                                  ]),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                             const Text("Kunlik tushum"),
@@ -142,13 +138,13 @@ class _MainPageState extends State<MainPage> {
                           },
                           icon: hideCost
                               ? const Icon(
-                            CupertinoIcons.eye_slash,
-                            color: Colors.white,
-                          )
+                                  CupertinoIcons.eye_slash,
+                                  color: Colors.white,
+                                )
                               : const Icon(
-                            CupertinoIcons.eye,
-                            color: Colors.white,
-                          ),
+                                  CupertinoIcons.eye,
+                                  color: Colors.white,
+                                ),
                         ),
                       ),
                       const Positioned(
@@ -166,85 +162,87 @@ class _MainPageState extends State<MainPage> {
                       final today = DateTime.now();
                       final filteredModels = models.where((model) {
                         final modelDate = DateTime.parse(model.date);
-                        return modelDate.day == today.day && modelDate.month == today.month && modelDate.year == today.year;
+                        return modelDate.day == today.day &&
+                            modelDate.month == today.month &&
+                            modelDate.year == today.year;
                       }).toList();
-                      return filteredModels.isEmpty ? Center(child: Lottie.asset(TImages.main)) : ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          final model = filteredModels[index];
-                          return ListTile(
-                            leading:  Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Center(
-                                  child: AvatarImage(
-                                    backgroundColor: TColors.tPrimaryColor,
-                                    size: 80,
-                                    child: Text(
-                                      model.contract.custom.name[0].toUpperCase() +
-                                          model.contract.custom.surname[0]
-                                              .toUpperCase(),
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w900,
-                                          color: Colors.white70),
-                                    ),
+                      return filteredModels.isEmpty
+                          ? Center(child: Lottie.asset(TImages.main))
+                          : ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                final model = filteredModels[index];
+                                return ListTile(
+                                  leading: Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: AvatarImage(
+                                          backgroundColor: TColors.tPrimaryColor,
+                                          size: 80,
+                                          child: Text(
+                                            model.contract.custom.name[0].toUpperCase() +
+                                                model.contract.custom.surname[0].toUpperCase(),
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w900,
+                                                color: Colors.white70),
+                                          ),
+                                        ),
+                                      )),
+                                  title: Text(
+                                    NumberFormat.simpleCurrency(
+                                            locale: 'uz', name: 'so`m', decimalDigits: 0)
+                                        .format(double.parse(model.sum)),
+                                    style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                                   ),
-                                )),
-                            title: Text(
-                              NumberFormat.simpleCurrency(locale: 'uz',name: 'so`m',decimalDigits: 0).format(double.parse(model.contract.sum)),
-                              style: context.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(
-
-                              "${model.contract.custom.name} ${model.contract.custom.surname}",
-                              style: context.bodyMedium,
-                            ),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: TSizes.xs),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(TSizes.xs),
-                                    color: TColors.tPrimaryColor,
+                                  subtitle: Text(
+                                    "${model.contract.custom.name} ${model.contract.custom.surname}",
+                                    style: context.bodyMedium,
                                   ),
-                                  child: Text(
-                                    model.types.name,
-                                    style: context.bodyLarge?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: Colors.white),
+                                  trailing: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: TSizes.xs),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(TSizes.xs),
+                                          color: TColors.tPrimaryColor,
+                                        ),
+                                        child: Text(
+                                          model.types.name,
+                                          style: context.bodyLarge?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                      Text(
+                                        model.date,
+                                        style: context.bodySmall
+                                            ?.copyWith(color: Colors.grey, fontSize: 12),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  model.date,
-                                  style: context.bodySmall
-                                      ?.copyWith(color: Colors.grey, fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Divider(
-
-                          );
-                        },
-                        itemCount: filteredModels.length,
-                      );
+                                );
+                              },
+                              separatorBuilder: (BuildContext context, int index) {
+                                return const Divider();
+                              },
+                              itemCount: filteredModels.length,
+                            );
                     },
                   )
                 ],
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

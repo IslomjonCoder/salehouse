@@ -2,7 +2,6 @@
 //
 //     final contractModel = contractModelFromJson(jsonString);
 
-import 'dart:convert';
 
 // ContractModel contractModelFromJson(String str) => ContractModel.fromJson(json.decode(str));
 //
