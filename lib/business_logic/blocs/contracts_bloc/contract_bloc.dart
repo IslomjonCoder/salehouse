@@ -23,7 +23,6 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
 
   _onSearchContractsEvent(SearchContractsEvent event, Emitter<ContractState> emit) async {
     final List<ContractUser>? contracts = cacheManager.get('contracts');
-    // print(contracts == null);
     if (contracts != null) {
       final searchResults = contracts
           .where((element) =>
@@ -34,23 +33,13 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
     }
     try {
       final searchResults = _searchContracts(event.query);
-      emit(
-        state.copyWith(
-          data: searchResults,
-          status: Status.success,
-        ),
-      );
+      emit(state.copyWith(data: searchResults, status: Status.success));
     } catch (e) {
-      emit(state.copyWith(
-        status: Status.failure,
-        error: e.toString(),
-      ));
+      emit(state.copyWith(status: Status.failure, error: e.toString()));
     }
   }
 
   List<ContractUser> _searchContracts(String query) {
-    // Implement your search logic here based on the query
-    // You may filter the contracts list by name or surname
     return state.contracts
         .where((contract) =>
             contract.custom.name.toLowerCase().contains(query.toLowerCase()) ||
@@ -59,15 +48,9 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
   }
 
   _onContractEventInitial(ContractEventInitial event, Emitter<ContractState> emit) async {
-    // use cache manager
     final contracts = cacheManager.get('contracts');
     if (contracts != null) {
-      emit(
-        state.copyWith(
-          data: contracts,
-          status: Status.success,
-        ),
-      );
+      emit(state.copyWith(data: contracts, status: Status.success));
       return;
     }
 
@@ -75,13 +58,7 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
     try {
       final contract = await apiService.contracts();
       cacheManager.add('contracts', contract);
-      emit(
-        state.copyWith(
-          data: contract,
-          status: Status.success,
-          // currentPage: 1,
-        ),
-      );
+      emit(state.copyWith(data: contract, status: Status.success));
     } catch (e) {
       emit(state.copyWith(status: Status.failure, error: e.toString()));
     }

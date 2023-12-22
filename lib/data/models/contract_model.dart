@@ -2,7 +2,6 @@
 //
 //     final contractModel = contractModelFromJson(jsonString);
 
-
 // ContractModel contractModelFromJson(String str) => ContractModel.fromJson(json.decode(str));
 //
 // String contractModelToJson(ContractModel data) => json.encode(data.toJson());
@@ -93,11 +92,10 @@ class ContractUser {
   String valute;
   Homes homes;
   Custom custom;
-  Detail detail;
+  Detail? detail;
   Staff staff;
   List<Payment> payments;
   List<ListElement> list;
-
 
   ContractUser({
     required this.id,
@@ -128,60 +126,60 @@ class ContractUser {
   });
 
   factory ContractUser.fromJson(Map<String, dynamic> json) => ContractUser(
-    id: json["id"],
-    name: json["name"],
-    userId: json["user_id"],
-    homeId: json["home_id"],
-    clientId: json["client_id"],
-    clientType: json["client_type"],
-    square: json["square"],
-    price: json["price"],
-    sum: json["sum"],
-    left: json["left"],
-    discount: json["discount"],
-    startPrice: json["start_price"],
-    date: DateTime.parse(json["date"]),
-    comment: json["comment"],
-    status: json["status"],
-    isrepaired: json["isrepaired"],
-    peniya: json["peniya"],
-    isvalute: json["isvalute"],
-    valute: json["valute"],
-    homes: Homes.fromJson(json["homes"]),
-    custom: Custom.fromJson(json["custom"]),
-    detail: Detail.fromJson(json["detail"]),
-    staff: Staff.fromJson(json["staff"]),
-    payments: List<Payment>.from(json["payments"].map((x) => Payment.fromJson(x))),
-    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x))),
-  );
+        id: json["id"],
+        name: json["name"],
+        userId: json["user_id"],
+        homeId: json["home_id"],
+        clientId: json["client_id"],
+        clientType: json["client_type"],
+        square: json["square"],
+        price: json["price"],
+        sum: json["sum"],
+        left: json["left"],
+        discount: json["discount"],
+        startPrice: json["start_price"],
+        date: DateTime.parse(json["date"]),
+        comment: json["comment"],
+        status: json["status"],
+        isrepaired: json["isrepaired"],
+        peniya: json["peniya"],
+        isvalute: json["isvalute"],
+        valute: json["valute"],
+        homes: Homes.fromJson(json["homes"]),
+        custom: Custom.fromJson(json["custom"]),
+        detail: json["detail"] == null ? null : Detail.fromJson(json["detail"]) ,
+        staff: Staff.fromJson(json["staff"]),
+        payments: List<Payment>.from(json["payments"].map((x) => Payment.fromJson(x))),
+        list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x))),
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //   "id": id,
-  //   "name": name,
-  //   "user_id": userId,
-  //   "home_id": homeId,
-  //   "client_id": clientId,
-  //   "client_type": clientType,
-  //   "square": square,
-  //   "price": price,
-  //   "sum": sum,
-  //   "left": left,
-  //   "discount": discount,
-  //   "start_price": startPrice,
-  //   "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-  //   "comment": comment,
-  //   "status": status,
-  //   "isrepaired": isrepaired,
-  //   "peniya": peniya,
-  //   "isvalute": isvalute,
-  //   "valute": valute,
-  //   "homes": homes.toJson(),
-  //   "custom": custom.toJson(),
-  //   "detail": detail.toJson(),
-  //   "staff": staff.toJson(),
-  //   "payments": List<dynamic>.from(payments.map((x) => x.toJson())),
-  //   "list": List<dynamic>.from(list.map((x) => x.toJson())),
-  // };
+// Map<String, dynamic> toJson() => {
+//   "id": id,
+//   "name": name,
+//   "user_id": userId,
+//   "home_id": homeId,
+//   "client_id": clientId,
+//   "client_type": clientType,
+//   "square": square,
+//   "price": price,
+//   "sum": sum,
+//   "left": left,
+//   "discount": discount,
+//   "start_price": startPrice,
+//   "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+//   "comment": comment,
+//   "status": status,
+//   "isrepaired": isrepaired,
+//   "peniya": peniya,
+//   "isvalute": isvalute,
+//   "valute": valute,
+//   "homes": homes.toJson(),
+//   "custom": custom.toJson(),
+//   "detail": detail.toJson(),
+//   "staff": staff.toJson(),
+//   "payments": List<dynamic>.from(payments.map((x) => x.toJson())),
+//   "list": List<dynamic>.from(list.map((x) => x.toJson())),
+// };
 }
 
 class Custom {
@@ -207,24 +205,24 @@ class Custom {
   });
 
   factory Custom.fromJson(Map<String, dynamic> json) => Custom(
-    id: json["id"],
-    name: json["name"],
-    surname: json["surname"],
-    middlename: json["middlename"],
-    clientType: json["client_type"],
-    phone: json["phone"],
-    phone2: json["phone2"],
-  );
+        id: json["id"],
+        name: json["name"],
+        surname: json["surname"],
+        middlename: json["middlename"],
+        clientType: json["client_type"],
+        phone: json["phone"],
+        phone2: json["phone2"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "surname": surname,
-    "middlename": middlename,
-    "client_type": clientType,
-    "phone": phone,
-    "phone2": phone2,
-  };
+        "id": id,
+        "name": name,
+        "surname": surname,
+        "middlename": middlename,
+        "client_type": clientType,
+        "phone": phone,
+        "phone2": phone2,
+      };
 }
 
 class Detail {
@@ -264,43 +262,63 @@ class Detail {
     required this.contractId,
   });
 
-  factory Detail.fromJson(Map<String, dynamic> json) => Detail(
-    id: json["id"],
-    passportSeries: json["passport_series"],
-    issue: DateTime.parse(json["issue"]),
-    authority: json["authority"],
-    birthday: DateTime.parse(json["birthday"]),
-    regionId: json["region_id"],
-    city: json["city"],
-    home: json["home"],
-    workPlace: json["work_place"],
-    image: json["image"],
-    inn: json["inn"],
-    mfo: json["mfo"],
-    oked: json["oked"],
-    accountNumber: json["account_number"],
-    bankName: json["bank_name"],
-    contractId: json["contract_id"],
-  );
+  Detail.empty()
+      : this(
+          id: 0,
+          passportSeries: "",
+          issue: DateTime.now(),
+          authority: "",
+          birthday: DateTime.now(),
+          regionId: "",
+          city: "",
+          home: "",
+          workPlace: "",
+          image: "",
+          inn: "",
+          mfo: "",
+          oked: "",
+          accountNumber: "",
+          bankName: "",
+          contractId: "",
+        );
 
-  // Map<String, dynamic> toJson() => {
-  //   "id": id,
-  //   "passport_series": passportSeries,
-  //   "issue": "${issue.year.toString().padLeft(4, '0')}-${issue.month.toString().padLeft(2, '0')}-${issue.day.toString().padLeft(2, '0')}",
-  //   "authority": authority,
-  //   "birthday": "${birthday.year.toString().padLeft(4, '0')}-${birthday.month.toString().padLeft(2, '0')}-${birthday.day.toString().padLeft(2, '0')}",
-  //   "region_id": regionId,
-  //   "city": city,
-  //   "home": home,
-  //   "work_place": workPlace,
-  //   "image": image,
-  //   "inn": inn,
-  //   "mfo": mfo,
-  //   "oked": oked,
-  //   "account_number": accountNumber,
-  //   "bank_name": bankName,
-  //   "contract_id": contractId,
-  // };
+  factory Detail.fromJson(Map<String, dynamic> json) => Detail(
+        id: json["id"] ?? 0,
+        passportSeries: json["passport_series"] ?? "",
+        issue: DateTime.parse(json["issue"]) ,
+        authority: json["authority"] ?? "",
+        birthday: DateTime.parse(json["birthday"]?? DateTime.now()) ,
+        regionId: json["region_id"] ?? "",
+        city: json["city"] ?? "",
+        home: json["home"] ?? "",
+        workPlace: json["work_place"] ?? "",
+        image: json["image"] ?? "",
+        inn: json["inn"] ?? "",
+        mfo: json["mfo"] ?? "",
+        oked: json["oked"] ?? "",
+        accountNumber: json["account_number"] ?? "",
+        bankName: json["bank_name"] ?? "",
+        contractId: json["contract_id"] ?? "",
+      );
+
+// Map<String, dynamic> toJson() => {
+//   "id": id,
+//   "passport_series": passportSeries,
+//   "issue": "${issue.year.toString().padLeft(4, '0')}-${issue.month.toString().padLeft(2, '0')}-${issue.day.toString().padLeft(2, '0')}",
+//   "authority": authority,
+//   "birthday": "${birthday.year.toString().padLeft(4, '0')}-${birthday.month.toString().padLeft(2, '0')}-${birthday.day.toString().padLeft(2, '0')}",
+//   "region_id": regionId,
+//   "city": city,
+//   "home": home,
+//   "work_place": workPlace,
+//   "image": image,
+//   "inn": inn,
+//   "mfo": mfo,
+//   "oked": oked,
+//   "account_number": accountNumber,
+//   "bank_name": bankName,
+//   "contract_id": contractId,
+// };
 }
 
 class Homes {
@@ -339,40 +357,40 @@ class Homes {
   });
 
   factory Homes.fromJson(Map<String, dynamic> json) => Homes(
-    id: json["id"],
-    blockId: json["block_id"],
-    number: json["number"],
-    stage: json["stage"],
-    rooms: json["rooms"],
-    square: json["square"],
-    repaired: json["repaired"],
-    norepaired: json["norepaired"],
-    start: json["start"],
-    isrepaired: json["isrepaired"],
-    islive: json["islive"],
-    status: json["status"],
-    image: json["image"],
-    planId: json["plan_id"],
-    isvalute: json["isvalute"],
-  );
+        id: json["id"],
+        blockId: json["block_id"],
+        number: json["number"],
+        stage: json["stage"],
+        rooms: json["rooms"],
+        square: json["square"],
+        repaired: json["repaired"],
+        norepaired: json["norepaired"],
+        start: json["start"],
+        isrepaired: json["isrepaired"],
+        islive: json["islive"],
+        status: json["status"],
+        image: json["image"],
+        planId: json["plan_id"],
+        isvalute: json["isvalute"],
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //   "id": id,
-  //   "block_id": blockId,
-  //   "number": number,
-  //   "stage": stage,
-  //   "rooms": rooms,
-  //   "square": square,
-  //   "repaired": repaired,
-  //   "norepaired": norepaired,
-  //   "start": start,
-  //   "isrepaired": isrepaired,
-  //   "islive": islive,
-  //   "status": status,
-  //   "image": image,
-  //   "plan_id": planId,
-  //   "isvalute": isvalute,
-  // };
+// Map<String, dynamic> toJson() => {
+//   "id": id,
+//   "block_id": blockId,
+//   "number": number,
+//   "stage": stage,
+//   "rooms": rooms,
+//   "square": square,
+//   "repaired": repaired,
+//   "norepaired": norepaired,
+//   "start": start,
+//   "isrepaired": isrepaired,
+//   "islive": islive,
+//   "status": status,
+//   "image": image,
+//   "plan_id": planId,
+//   "isvalute": isvalute,
+// };
 }
 
 class Staff {
@@ -397,26 +415,26 @@ class Staff {
   });
 
   factory Staff.fromJson(Map<String, dynamic> json) => Staff(
-    id: json["id"],
-    name: json["name"],
-    login: json["login"],
-    password: json["password"],
-    role: json["role"],
-    status: json["status"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
-  );
+        id: json["id"],
+        name: json["name"],
+        login: json["login"],
+        password: json["password"],
+        role: json["role"],
+        status: json["status"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //   "id": id,
-  //   "name": name,
-  //   "login": login,
-  //   "password": password,
-  //   "role": role,
-  //   "status": status,
-  //   "created_at": createdAt,
-  //   "updated_at": updatedAt,
-  // };
+// Map<String, dynamic> toJson() => {
+//   "id": id,
+//   "name": name,
+//   "login": login,
+//   "password": password,
+//   "role": role,
+//   "status": status,
+//   "created_at": createdAt,
+//   "updated_at": updatedAt,
+// };
 }
 
 // class Link {
@@ -463,24 +481,24 @@ class ListElement {
   });
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
-    id: json["id"],
-    paymentDate: DateTime.parse(json["payment_date"]),
-    contractId: json["contract_id"],
-    sum: json["sum"],
-    listDefault: json["default"],
-    status: json["status"],
-    left: json["left"],
-  );
+        id: json["id"],
+        paymentDate: DateTime.parse(json["payment_date"]),
+        contractId: json["contract_id"],
+        sum: json["sum"],
+        listDefault: json["default"],
+        status: json["status"],
+        left: json["left"],
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //   "id": id,
-  //   "payment_date": "${paymentDate.year.toString().padLeft(4, '0')}-${paymentDate.month.toString().padLeft(2, '0')}-${paymentDate.day.toString().padLeft(2, '0')}",
-  //   "contract_id": contractId,
-  //   "sum": sum,
-  //   "default": listDefault,
-  //   "status": status,
-  //   "left": left,
-  // };
+// Map<String, dynamic> toJson() => {
+//   "id": id,
+//   "payment_date": "${paymentDate.year.toString().padLeft(4, '0')}-${paymentDate.month.toString().padLeft(2, '0')}-${paymentDate.day.toString().padLeft(2, '0')}",
+//   "contract_id": contractId,
+//   "sum": sum,
+//   "default": listDefault,
+//   "status": status,
+//   "left": left,
+// };
 }
 
 class Payment {
@@ -505,24 +523,24 @@ class Payment {
   });
 
   factory Payment.fromJson(Map<String, dynamic> json) => Payment(
-    id: json["id"],
-    contractId: json["contract_id"],
-    userId: json["user_id"],
-    date: DateTime.parse(json["date"]),
-    sum: json["sum"],
-    typeId: json["type_id"],
-    isvalute: json["isvalute"],
-    valute: json["valute"],
-  );
+        id: json["id"],
+        contractId: json["contract_id"],
+        userId: json["user_id"],
+        date: DateTime.parse(json["date"]),
+        sum: json["sum"],
+        typeId: json["type_id"],
+        isvalute: json["isvalute"],
+        valute: json["valute"],
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //   "id": id,
-  //   "contract_id": contractId,
-  //   "user_id": userId,
-  //   "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-  //   "sum": sum,
-  //   "type_id": typeId,
-  //   "isvalute": isvalute,
-  //   "valute": valute,
-  // };
+// Map<String, dynamic> toJson() => {
+//   "id": id,
+//   "contract_id": contractId,
+//   "user_id": userId,
+//   "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+//   "sum": sum,
+//   "type_id": typeId,
+//   "isvalute": isvalute,
+//   "valute": valute,
+// };
 }

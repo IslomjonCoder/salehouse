@@ -91,53 +91,54 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
                 },
               ),
             ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
-              child: Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(2),
-                  1: FlexColumnWidth(3),
-                },
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                border: TableBorder.all(),
-                children: [
-                  buildTableRow("Passport berilgan sana",
-                      formatDate(widget.contract.detail.issue).toString()),
-                  buildTableRow(
-                      "Tug'ulgan sanasi", formatDate(widget.contract.detail.birthday).toString()),
-                  buildTableRow("Passport seriyasi", widget.contract.detail.passportSeries),
-                  buildTableRow("\nViloyat\n", widget.contract.detail.authority),
-                  buildTableRow(
-                    "\nTelefon raqami\n",
-                    "${widget.contract.custom.phone}\n${widget.contract.custom.phone2}",
-                  ),
-                  buildTableRow("\nYashash manzili\n\n", widget.contract.detail.home),
-                  buildTableRow("Ish joyi", widget.contract.detail.workPlace),
-                ],
-              ),
-            ),
-            const Divider(),
-
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columnSpacing: 15,
-                  columns: const [
-                    DataColumn(label: Text("№")),
-                    DataColumn(label: Text("Sana")),
-                    DataColumn(label: Text("Summasi")),
-                    DataColumn(label: Text("To'lov turi")),
+            if (widget.contract.detail != null) const Divider(),
+            (widget.contract.detail != null)?
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
+                child: Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(2),
+                    1: FlexColumnWidth(3),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  border: TableBorder.all(),
+                  children: [
+                    buildTableRow("Passport berilgan sana",
+                        formatDate(widget.contract.detail!.issue).toString()),
+                    buildTableRow("Tug'ulgan sanasi",
+                        formatDate(widget.contract.detail!.birthday).toString()),
+                    buildTableRow("Passport seriyasi", widget.contract.detail!.passportSeries),
+                    buildTableRow("\nViloyat\n", widget.contract.detail!.authority),
+                    buildTableRow(
+                      "\nTelefon raqami\n",
+                      "${widget.contract.custom.phone}\n${widget.contract.custom.phone2}",
+                    ),
+                    buildTableRow("\nYashash manzili\n\n", widget.contract.detail!.home),
+                    buildTableRow("Ish joyi", widget.contract.detail!.workPlace),
                   ],
-                  rows: widget.contract.payments
-                      .map((e) => DataRow(cells: [
-                            DataCell(Text((widget.contract.payments.indexOf(e) + 1).toString())),
-                            DataCell(Text(dateFormat.format(e.date))),
-                            DataCell(Text(moneyFormat.format(double.parse(e.sum)))),
-                            DataCell(calculatePaymentState(e.typeId)),
-                          ]))
-                      .toList()),
-            ),
+                ),
+              ):Text('Ma\'lumotlar mavjud emas'),
+            if (widget.contract.payments.isNotEmpty) const Divider(),
+             (widget.contract.payments.isNotEmpty)?
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                    columnSpacing: 15,
+                    columns: const [
+                      DataColumn(label: Text("№")),
+                      DataColumn(label: Text("Sana")),
+                      DataColumn(label: Text("Summasi")),
+                      DataColumn(label: Text("To'lov turi")),
+                    ],
+                    rows: widget.contract.payments
+                        .map((e) => DataRow(cells: [
+                              DataCell(Text((widget.contract.payments.indexOf(e) + 1).toString())),
+                              DataCell(Text(dateFormat.format(e.date))),
+                              DataCell(Text(moneyFormat.format(double.parse(e.sum)))),
+                              DataCell(calculatePaymentState(e.typeId)),
+                            ]))
+                        .toList()),
+              ):Text('To`lovlar mavjud emas'),
             const Gap(50),
           ],
         ),
