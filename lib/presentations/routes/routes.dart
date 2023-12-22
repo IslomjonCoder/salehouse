@@ -51,7 +51,7 @@ class AppRoutes {
       case RouteNames.freeHomes:
         return MaterialPageRoute(builder: (context) => const FreeHomesScreen());
       case RouteNames.homes:
-        return MaterialPageRoute(builder: (context) =>  const HomesScreen());
+        return MaterialPageRoute(builder: (context) =>   HomesScreen());
       // case RouteNames.blocs:
       //   return MaterialPageRoute(builder: (context) => const BlocsScreen());
       // case RouteNames.companies:
@@ -61,7 +61,7 @@ class AppRoutes {
       // case RouteNames.blocObjects:
       //   return MaterialPageRoute(builder: (context) => const BlocObjectsScreen());
       case RouteNames.freeHomesAll:
-        return MaterialPageRoute(builder: (context) => const FreeHomesAll());
+        return MaterialPageRoute(builder: (context) =>  FreeHomesAll(homeId: settings.arguments as int));
       case RouteNames.freeHomeDetail:
         return MaterialPageRoute(
           builder: (context) => DetailScreen(homeModel: settings.arguments as FreeHomeModel),

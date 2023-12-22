@@ -11,7 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomesScreen extends StatelessWidget {
-   const HomesScreen({super.key});
+   const HomesScreen({super.key, });
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +44,7 @@ class HomesScreen extends StatelessWidget {
                   ),
                   const Gap(TSizes.base),
                   FilledButton(
-                    onPressed: () {
-                      // if (state.contracts.isEmpty) {
-                        context.read<HomesBloc>().add(HomesEventInitial());
-                      // } else {
-                      //   context.read<HomesBloc>().add(NextPageEvent(state.currentPage + 1));
-                      // }
-                    },
+                    onPressed: () => context.read<HomesBloc>().add(HomesEventInitial()),
                     child: const Text('Qayta Urinish'),
                   )
                 ],

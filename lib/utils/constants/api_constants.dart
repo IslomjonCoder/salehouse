@@ -2,8 +2,8 @@
 
 // -- API URL --
 
-const String baseUrl = 'https://isfaanbac.uz/api';
-
+const String baseUrl = 'https://salehousestrongbac.uz/api';
+// https://salehousestrongbac.uz/api
 
 // -- Base url --
 const String baseUrlForImage = 'https://isfaanbac.uz';

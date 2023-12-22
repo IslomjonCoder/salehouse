@@ -12,14 +12,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class FreeHomesAll extends StatefulWidget {
-  const FreeHomesAll({super.key});
+class FreeHomesAll extends StatelessWidget {
+  final int homeId;
+  const FreeHomesAll({super.key, required this.homeId});
 
-  @override
-  State<FreeHomesAll> createState() => _FreeHomesAllState();
-}
-
-class _FreeHomesAllState extends State<FreeHomesAll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +49,11 @@ class _FreeHomesAllState extends State<FreeHomesAll> {
                     ),
                     const Gap(TSizes.base),
                     FilledButton(
-                      onPressed: () {} ,
+                      onPressed: () {
+                        context
+                            .read<FreeHomesBloc>()
+                            .add(GetFreeHomesByBlockIdEvent(blockId: homeId));
+                      } ,
                       child: const Text('Qayta Urinish'),
                     )
                   ],

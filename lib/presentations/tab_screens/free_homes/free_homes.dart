@@ -69,7 +69,7 @@ class FreeHomesScreen extends StatelessWidget {
                   context
                       .read<FreeHomesBloc>()
                       .add(GetFreeHomesByBlockIdEvent(blockId: blockModel.id));
-                  context.pushNamed(RouteNames.freeHomesAll);
+                  context.pushNamed(RouteNames.freeHomesAll,arguments: blockModel.id);
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(
