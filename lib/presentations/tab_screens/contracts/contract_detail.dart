@@ -161,6 +161,8 @@ Widget calculatePaymentState(String paymentState) {
       return buildContainer('P2P', Colors.blue[800]!);
     case "5":
       return buildContainer('AKT', Colors.red[800]!);
+      case "7":
+      return buildContainer('USD', Colors.purple[800]!);
   }
   return Text('Nomalum$paymentState');
 }
