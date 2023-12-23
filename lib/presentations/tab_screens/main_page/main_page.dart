@@ -1,5 +1,6 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:crm/business_logic/blocs/payment_bloc/payment_bloc.dart';
+import 'package:crm/data/service/api_service.dart';
 import 'package:crm/presentations/tab_screens/no_connection/no_connection.dart';
 import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/enums.dart';
@@ -28,6 +29,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(

@@ -11,7 +11,9 @@ import 'package:gap/gap.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomesScreen extends StatelessWidget {
-   const HomesScreen({super.key, });
+  const HomesScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,7 @@ class HomesScreen extends StatelessWidget {
             current.status.isLoading || current.status.isSuccess || current.status.isFailure,
         builder: (context, state) {
           if (state.status.isLoading) {
-            return Center(
-                child:
-                    LoadingAnimationWidget.inkDrop(color: TColors.tPrimaryColor, size: TSizes.lg));
+            return _buildLoading();
           } else if (state.status.isFailure) {
             return Center(
               child: Column(
@@ -55,29 +55,33 @@ class HomesScreen extends StatelessWidget {
             children: [
               SizedBox(
                 height: 60,
-                child: BlocBuilder<GeneralBloc, GeneralState>(
+                child: BlocConsumer<GeneralBloc, GeneralState>(
                   builder: (context, state) {
                     return ListView.separated(
                       itemBuilder: (context, index) {
                         return FilterChip.elevated(
-                          selected: context.watch
-                          <HomesBloc>().state.blocIndex-1 == index,
-                            label: Text(state.blocs[index].name), onSelected: (value) {
-                          if (value) {
-                            context.read<HomesBloc>().add(SelectBlocEvent(index+1));
-                          }
-                        });
+                            selected: context.watch<HomesBloc>().state.blocIndex - 1 == index,
+                            label: Text(state.blocs[index].name),
+                            onSelected: (value) {
+                              if (value) {
+                                context.read<HomesBloc>().add(SelectBlocEvent(state.blocs[index].id));
+                              }
+                            });
                       },
                       separatorBuilder: (context, index) => const Gap(TSizes.sm),
                       itemCount: state.blocs.length,
                       scrollDirection: Axis.horizontal,
                     );
-                  },
+
+                  }, listener: (BuildContext context, GeneralState state) {
+                  context.read<HomesBloc>().add(SelectBlocEvent(state.blocs[0].id));
+                },
+                  listenWhen: (previous, current) => current.status.isSuccess,
                 ),
               ),
-              Expanded(
+              Expanded (
                 child: ListView.separated(
-                  controller: context.read<HomesBloc>().scrollController,
+                  // controller: context.read<HomesBloc>().scrollController,
                   itemCount: state.contracts.length,
                   padding: const EdgeInsets.all(TSizes.sm),
                   itemBuilder: (BuildContext context, int index) {
@@ -97,7 +101,7 @@ class HomesScreen extends StatelessWidget {
                               ),
                               child: Center(
                                   child: Text(
-                                "${state.contracts[index].blockId}- Blok / ${home.number}-uy",
+                                "${context.read<GeneralBloc>().state.blocs.where((element) => element.id == int.parse(home.blockId)).first.name}- Blok / ${home.number}-uy",
                                 style: context.textTheme.titleMedium
                                     ?.copyWith(fontWeight: FontWeight.w700, color: Colors.white),
                               )),
@@ -231,7 +235,13 @@ class HomesScreen extends StatelessWidget {
     );
   }
 
-  formatStatus (String status) {
+  Center _buildLoading() {
+    return Center(
+              child:
+                  LoadingAnimationWidget.inkDrop(color: TColors.tPrimaryColor, size: TSizes.lg));
+  }
+
+  formatStatus(String status) {
     switch (status) {
       case "1":
         return "Bo'sh";
@@ -243,7 +253,8 @@ class HomesScreen extends StatelessWidget {
         return "Aktiv emas";
     }
   }
-  formatStatusColor (String status) {
+
+  formatStatusColor(String status) {
     switch (status) {
       case "1":
         return Colors.green;

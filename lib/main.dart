@@ -12,12 +12,14 @@ import 'package:crm/presentations/auth/login.dart';
 import 'package:crm/presentations/routes/routes.dart';
 import 'package:crm/utils/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 
 void main() {
   runApp(const App());
+
   // initialize();
 }
 
@@ -37,7 +39,7 @@ class App extends StatelessWidget {
         BlocProvider<TabCubit>(create: (context) => TabCubit()),
         // BlocProvider<SearchBloc>(create: (context) => SearchBloc()..add(SearchValueChanged(''))),
         BlocProvider(create: (context) => AuthBloc()),
-        BlocProvider(create: (context) => HomesBloc()..add(HomesEventInitial())),
+        BlocProvider(create: (context) => HomesBloc()),
         BlocProvider(create: (context) => PaymentBloc()..add(PaymentInitialEvent())),
         BlocProvider(create: (context) => FreeHomesBloc()..add(GetFreeHomesEvent())),
         BlocProvider(create: (context) => GeneralBloc()..add(GeneralInitialEvent())),

@@ -17,7 +17,7 @@ class HomesState {
     // this.currentPage = 1,
     // this.nextPageLoading = false,
     this.error = '',
-    this.blocIndex = 1,
+    this.blocIndex = 19,
   });
 
   HomesState copyWith({

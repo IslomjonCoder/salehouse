@@ -1,5 +1,6 @@
 import 'package:crm/presentations/routes/routes.dart';
 import 'package:crm/utils/constants/api_constants.dart';
+import 'package:crm/utils/constants/colors.dart';
 import 'package:crm/utils/constants/image_strings.dart';
 import 'package:crm/utils/local_storage/storage_utility.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: 3),
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   void check() async {
     // await TLocalStorage.remove(tokenKey);
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
 
     TLocalStorage.getString(tokenKey).then((value) {
       if (value != null) {
@@ -66,20 +67,11 @@ class GradientBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF6b5c79),Color(0xFF6b5c79), Color(0xFFec995e),Color(0xFFec995e)],
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: FadeTransition(
-          opacity: fadeAnimation,
-          child: Image.asset(TImages.appLogo, height: MediaQuery.of(context).size.height),
-        ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: FadeTransition(
+        opacity: fadeAnimation,
+        child: Center(child: Text('SaleHouse',style: context.displaySmall?.copyWith(color: TColors.tPrimaryColor),)),
       ),
     );
   }
